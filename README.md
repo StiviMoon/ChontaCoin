@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🌴 ChontaCoin
 
-## Getting Started
+**ChontaCoin** es un proyecto de impacto social, ambiental y económico basado en la tecnología blockchain (Ethereum). Su objetivo es incentivar a la ciudadanía caleña a participar activamente en jornadas de limpieza y cuidado del entorno urbano, a cambio de recompensas en forma de tokens llamados **ChontaTokens**.
 
-First, run the development server:
+## 🎯 Objetivo
+
+Fomentar el compromiso ciudadano con el entorno mediante un sistema de incentivos digitales que recompensa acciones positivas como:
+- Participación en jornadas de limpieza.
+- Separación adecuada de residuos.
+- Actividades comunitarias ecológicas.
+
+## 🚀 ¿Cómo funciona?
+
+1. **Registro con wallet:** Los usuarios deben conectarse con su wallet Ethereum para acceder a cualquier funcionalidad del sitio.
+2. **Participación en actividades:** Los ciudadanos participan en eventos o retos ambientales.
+3. **Recompensas:** Reciben **ChontaTokens**, que pueden canjear por:
+   - Recargas para el transporte MIO.
+   - Descuentos en comercios locales aliados.
+
+## 🔐 Acceso Restringido
+
+El sitio completo está restringido:  
+🟢 Solo los usuarios con una wallet conectada pueden acceder a cualquier parte, incluida la **landing page**.
+
+## 🖥️ Estructura del Sitio
+
+El sitio está desarrollado con **Next.js** para el frontend y **Node.js** para el backend. La estructura de navegación incluye:
+
+- **INICIO:** Presentación de la iniciativa.
+- **¿QUÉ ES CHONTACOIN?** Explicación del token y su propósito.
+- **¿CÓMO FUNCIONA?** Paso a paso del sistema de recompensas.
+- **VENTAJAS Y USOS:** Beneficios del token para los ciudadanos.
+- **RECOMPENSAS:** Listado de premios y canjes disponibles.
+- **UNETE / WALLET LOGIN:** Acceso mediante conexión con MetaMask u otra wallet.
+
+## 🧱 Tecnologías utilizadas
+
+- ⚛️ **Next.js** (frontend)
+- 🟩 **Node.js + Express** (backend)
+- 🔐 **Web3.js / ethers.js** para interacción con la blockchain
+- 💾 MongoDB (base de datos para usuarios y actividad)
+- 🧠 IPFS / NFT.storage (opcional para almacenar evidencia de participación)
+
+## 📦 Instalación
 
 ```bash
+git clone git@github-personal:StiviMoon/ChontaCoin.git
+cd ChontaCoin
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
