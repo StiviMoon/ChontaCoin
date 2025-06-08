@@ -2,7 +2,7 @@
 import { useAccount, useBalance } from 'wagmi';
 import useUserStore from '@/lib/userStore';
 import { formatAddress } from '@/lib/web3';
-import { Wallet, Coins } from 'lucide-react';
+import { Wallet, Coins, HandMetal } from 'lucide-react';
 
 export default function Header() {
   const { address } = useAccount();
@@ -11,23 +11,23 @@ export default function Header() {
   const tokens = useUserStore((state) => state.tokens);
   
   return (
-    <header className="fixed top-0 right-0 left-64 z-30 flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6">
-      <div>
+    <header className="fixed top-0 right-0 left-64 z-30 flex h-16 items-center justify-between bg-white px-6">
+      {/* Left: User Info */}
+      <div className="flex items-center gap-3">
         <h2 className="text-lg font-semibold text-gray-900">
-          ¡Hola, {user?.name || 'Usuario'}! 👋
+          ¡Hola, {user?.name || 'Usuario'}!
         </h2>
-        <p className="text-sm text-gray-600">
-          Bienvenido a tu dashboard de ChontaToken
-        </p>
+        <HandMetal />
       </div>
-      
+
+      {/* Right: Balances & Address */}
       <div className="flex items-center gap-4">
         {/* Token Balance */}
         <div className="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-2">
           <Coins className="h-5 w-5 text-green-600" />
           <span className="font-semibold text-green-700">{tokens} CHT</span>
         </div>
-        
+
         {/* ETH Balance */}
         {balance && (
           <div className="flex items-center gap-2 rounded-lg bg-blue-50 px-4 py-2">
@@ -37,7 +37,7 @@ export default function Header() {
             </span>
           </div>
         )}
-        
+
         {/* Wallet Address */}
         <div className="flex items-center gap-2 rounded-lg bg-gray-100 px-4 py-2">
           <div className="w-2 h-2 bg-green-500 rounded-full"></div>

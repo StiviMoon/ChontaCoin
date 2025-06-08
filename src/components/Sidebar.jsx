@@ -84,7 +84,7 @@ export default function Sidebar() {
       <div className="flex h-full flex-col">
         {/* Logo */}
         <div className="flex h-16 items-center border-b border-gray-200 px-6">
-          <h1 className="text-2xl font-bold text-green-600">ChontaToken</h1>
+          <h1 className="text-2xl font-bold text-green-600">ChontaCoin</h1>
         </div>
         
         {/* Navigation */}
@@ -111,11 +111,11 @@ export default function Sidebar() {
         </nav>
         
         {/* Logout */}
-        <div className="border-t border-gray-200 p-3">
+        <div className=" p-3">
           <button 
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            className="flex w-full items-center text-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 bg-red-50  hover:bg-red-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             {isLoggingOut ? (
               <>

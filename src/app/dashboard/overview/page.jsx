@@ -112,23 +112,6 @@ export default function OverviewPage() {
   
   return (
     <div className="space-y-6">
-      {/* Título con información de wallet */}
-      <div className="flex justify-between items-start">
-        <div>
-          <h1 className="text-2xl font-bold text-gray-900">Resumen General</h1>
-          <p className="text-gray-600">
-            Bienvenido de vuelta, {ensName || user?.name || formatAddress(address)}
-          </p>
-        </div>
-        <div className="bg-gray-50 rounded-lg px-4 py-2">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-sm text-gray-600">Red: Mainnet</span>
-          </div>
-        </div>
-      </div>
-      
-      {/* Estadísticas */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => {
           const Icon = stat.icon;
@@ -174,6 +157,29 @@ export default function OverviewPage() {
               </p>
             </div>
           ))}
+        </div>
+      </div>
+      {/* Gráfico o estadísticas adicionales */}
+      <div className="rounded-xl bg-white p-6 shadow-sm border border-gray-100">
+        <h3 className="mb-4 text-lg font-semibold text-gray-900">
+          Tu Impacto Ambiental
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="text-center p-4 bg-green-50 rounded-lg">
+            <Globe className="h-8 w-8 text-green-600 mx-auto mb-2" />
+            <p className="text-2xl font-bold text-gray-900">{activities.length * 2}</p>
+            <p className="text-sm text-gray-600">kg CO₂ reducidos</p>
+          </div>
+          <div className="text-center p-4 bg-blue-50 rounded-lg">
+            <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+            <p className="text-2xl font-bold text-gray-900">{activities.length * 5}</p>
+            <p className="text-sm text-gray-600">Personas impactadas</p>
+          </div>
+          <div className="text-center p-4 bg-purple-50 rounded-lg">
+            <Activity className="h-8 w-8 text-purple-600 mx-auto mb-2" />
+            <p className="text-2xl font-bold text-gray-900">{activities.length}</p>
+            <p className="text-sm text-gray-600">Horas voluntariado</p>
+          </div>
         </div>
       </div>
       
@@ -236,6 +242,8 @@ export default function OverviewPage() {
             ))}
           </div>
         </div>
+
+        
         
         {/* Próximos Eventos */}
         <div className="rounded-xl bg-white p-6 shadow-sm border border-gray-100">
@@ -280,29 +288,7 @@ export default function OverviewPage() {
         </div>
       </div>
       
-      {/* Gráfico o estadísticas adicionales */}
-      <div className="rounded-xl bg-white p-6 shadow-sm border border-gray-100">
-        <h3 className="mb-4 text-lg font-semibold text-gray-900">
-          Tu Impacto Ambiental
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="text-center p-4 bg-green-50 rounded-lg">
-            <Globe className="h-8 w-8 text-green-600 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-gray-900">{activities.length * 2}</p>
-            <p className="text-sm text-gray-600">kg CO₂ reducidos</p>
-          </div>
-          <div className="text-center p-4 bg-blue-50 rounded-lg">
-            <Users className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-gray-900">{activities.length * 5}</p>
-            <p className="text-sm text-gray-600">Personas impactadas</p>
-          </div>
-          <div className="text-center p-4 bg-purple-50 rounded-lg">
-            <Activity className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-gray-900">{activities.length}</p>
-            <p className="text-sm text-gray-600">Horas voluntariado</p>
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 }
