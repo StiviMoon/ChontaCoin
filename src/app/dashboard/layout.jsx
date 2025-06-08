@@ -9,18 +9,22 @@ import { Loader2 } from 'lucide-react';
 
 export default function DashboardLayout({ children }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { isConnected } = useAuthCheck(true);
   
   useEffect(() => {
-    // Pequeño delay para asegurar que la verificación de auth se complete
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 100);
     
     return () => clearTimeout(timer);
   }, []);
+
+  // Cerrar sidebar cuando se cambie de ruta en móvil
+  useEffect(() => {
+    setSidebarOpen(false);
+  }, []);
   
-  // Mostrar loading mientras verifica autenticación
   if (isLoading || !isConnected) {
     return (
       <div className="flex h-screen items-center justify-center bg-gray-50">
@@ -31,10 +35,19 @@ export default function DashboardLayout({ children }) {
   
   return (
     <div className="flex h-screen bg-gray-50">
-      <Sidebar />
-      <div className="flex-1 pl-64">
-        <Header />
-        <main className="mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6">
+      {/* Sidebar */}
+      <Sidebar 
+        isOpen={sidebarOpen} 
+        onClose={() => setSidebarOpen(false)} 
+      />
+      
+      {/* Main Content */}
+      <div className="flex-1 lg:pl-64 flex flex-col">
+        {/* Header */}
+        <Header onMenuClick={() => setSidebarOpen(true)} />
+        
+        {/* Main Content Area */}
+        <main className="flex-1 mt-16 overflow-y-auto p-4 lg:p-6">
           {children}
         </main>
       </div>
