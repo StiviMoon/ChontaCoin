@@ -4,6 +4,7 @@ import mockData, {
   mockActivities, 
   mockUsers, 
   mockRewards,
+  mockParticipations,
   categories,
   systemConfig,
   calculateStats,
@@ -66,69 +67,110 @@ class DataService {
     }
   }
 
-  async getCurrentUser(walletAddress) {
-    console.log('🔍 getCurrentUser llamado con:', walletAddress);
+  async getCurrentUser(walletAddress, ensName = null) {
+  console.log('🔍 getCurrentUser llamado con:', walletAddress);
+  
+  if (this.mockMode) {
+    console.log('📊 Modo mock activado');
     
-    if (this.mockMode) {
-      console.log('📊 Modo mock activado');
-      
-      // Buscar si existe un usuario mock con esta wallet
-      const existingMockUser = mockUsers.find(u => 
-        u.address.toLowerCase() === walletAddress?.toLowerCase()
-      );
-      
-      if (existingMockUser) {
-        console.log('✅ Usuario mock encontrado:', existingMockUser.name);
-        return Promise.resolve(existingMockUser);
-      }
-      
-      // Crear nuevo usuario basado en la wallet conectada
-      const newMockUser = {
-        id: Date.now(),
-        name: `Ciudadano ${walletAddress.slice(0, 6)}`,
-        email: `user${walletAddress.slice(2, 8)}@chontacoin.com`,
-        address: walletAddress,
-        ensName: null,
-        joinedDate: new Date().toISOString(),
-        neighborhood: 'Cali, Valle del Cauca',
-        tokens: Math.floor(Math.random() * 100) + 50, // Tokens aleatorios entre 50-150
-        completedActivities: Math.floor(Math.random() * 5),
-        level: 'Ciudadano Activo',
-        avatar: null
-      };
-      
-      console.log('🆕 Nuevo usuario mock creado:', newMockUser.name);
-      return Promise.resolve(newMockUser);
-    }
+    // En lugar de usar Usuario Demo, crear usuario con datos reales de la wallet
+    const realUserData = {
+      id: 1, // Mantener ID para compatibilidad
+      name: ensName || this.formatWalletAddress(walletAddress), // Usar ENS o wallet formateada
+      email: null, // No hay email real desde la wallet
+      address: walletAddress,
+      ensName: ensName,
+      joinedDate: new Date().toISOString(), // Fecha actual de "registro"
+      neighborhood: 'Yumbo, Valle del Cauca', // Tu ubicación
+      tokens: 0, // Empezar con 0 tokens para usuario real
+      completedActivities: 0,
+      level: 'Ciudadano Nuevo',
+      avatar: null
+    };
     
-    try {
-      console.log('🌐 Intentando conectar a API real...');
-      const response = await fetch(`${this.apiUrl}/users/wallet/${walletAddress}`);
-      if (!response.ok) {
-        console.log('📝 Usuario no existe, creando nuevo...');
-        return this.createUserFromWallet(walletAddress);
-      }
-      const userData = await response.json();
-      console.log('✅ Usuario real obtenido:', userData);
-      return userData;
-    } catch (error) {
-      console.warn('⚠️ API call failed, usando mock user:', error);
-      
-      // Fallback a usuario mock personalizado
-      return {
-        id: Date.now(),
-        name: `Usuario ${walletAddress.slice(0, 6)}`,
-        email: `user${walletAddress.slice(2, 8)}@chontacoin.com`,
-        address: walletAddress,
-        ensName: null,
-        joinedDate: new Date().toISOString(),
-        neighborhood: 'Cali, Valle del Cauca',
-        tokens: 75, // Tokens iniciales
-        completedActivities: 0,
-        level: 'Ciudadano Nuevo'
-      };
-    }
+    console.log('✅ Usuario real creado:', realUserData.name);
+    return Promise.resolve(realUserData);
   }
+  
+  try {
+    console.log('🌐 Intentando conectar a API real...');
+    const response = await fetch(`${this.apiUrl}/users/wallet/${walletAddress}`);
+    if (!response.ok) {
+      console.log('📝 Usuario no existe, creando nuevo...');
+      return this.createUserFromWallet(walletAddress, ensName);
+    }
+    const userData = await response.json();
+    console.log('✅ Usuario real obtenido:', userData);
+    return userData;
+  } catch (error) {
+    console.warn('⚠️ API call failed, creando usuario real:', error);
+    
+    // Fallback con datos reales de la wallet
+    return {
+      id: Date.now(),
+      name: ensName || this.formatWalletAddress(walletAddress),
+      email: null,
+      address: walletAddress,
+      ensName: ensName,
+      joinedDate: new Date().toISOString(),
+      neighborhood: 'Yumbo, Valle del Cauca',
+      tokens: 0,
+      completedActivities: 0,
+      level: 'Ciudadano Nuevo',
+      avatar: null
+    };
+  }
+}
+
+// Agregar función helper para formatear direcciones de wallet
+formatWalletAddress(address) {
+  if (!address) return 'Usuario Conectado';
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+}
+
+// Modificar createUserFromWallet para incluir ENS
+async createUserFromWallet(walletAddress, ensName = null) {
+  if (this.mockMode) {
+    const newUser = {
+      id: Date.now(),
+      name: ensName || this.formatWalletAddress(walletAddress),
+      email: null,
+      address: walletAddress,
+      ensName: ensName,
+      joinedDate: new Date().toISOString(),
+      neighborhood: 'Yumbo, Valle del Cauca',
+      tokens: 0,
+      completedActivities: 0,
+      level: 'Ciudadano Nuevo',
+      avatar: null
+    };
+    return Promise.resolve(newUser);
+  }
+  
+  try {
+    const response = await fetch(`${this.apiUrl}/users`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        address: walletAddress,
+        ensName: ensName 
+      })
+    });
+    if (!response.ok) throw new Error('Failed to create user');
+    return await response.json();
+  } catch (error) {
+    console.warn('Failed to create user, using real wallet data:', error);
+    return {
+      id: Date.now(),
+      name: ensName || this.formatWalletAddress(walletAddress),
+      address: walletAddress,
+      ensName: ensName,
+      tokens: 0,
+      completedActivities: 0,
+      level: 'Ciudadano Nuevo'
+    };
+  }
+}
 
   async createUserFromWallet(walletAddress) {
     if (this.mockMode) {
@@ -139,7 +181,7 @@ class DataService {
         address: walletAddress,
         ensName: null,
         joinedDate: new Date().toISOString(),
-        neighborhood: null,
+        neighborhood: 'Cali, Valle del Cauca',
         tokens: 0,
         completedActivities: 0,
         level: 'Ciudadano Nuevo',
@@ -222,13 +264,61 @@ class DataService {
     }
   }
 
+  // Verificar si el usuario está inscrito en una actividad
+  async isUserEnrolledInActivity(userId, activityId) {
+    if (this.mockMode) {
+      const participation = mockParticipations.find(p => 
+        p.userId === userId && p.activityId === activityId
+      );
+      return Promise.resolve(!!participation);
+    }
+    
+    try {
+      const response = await fetch(`${this.apiUrl}/participations/check?userId=${userId}&activityId=${activityId}`);
+      if (!response.ok) return false;
+      const result = await response.json();
+      return result.enrolled;
+    } catch (error) {
+      console.warn('API call failed, checking mock data:', error);
+      return mockParticipations.some(p => p.userId === userId && p.activityId === activityId);
+    }
+  }
+
   async enrollInActivity(activityId, userId, walletAddress) {
     if (this.mockMode) {
+      // Verificar si ya está inscrito
+      const alreadyEnrolled = mockParticipations.some(p => 
+        p.userId === userId && p.activityId === activityId
+      );
+      
+      if (alreadyEnrolled) {
+        return Promise.resolve({
+          success: false,
+          message: 'Ya estás inscrito en esta actividad'
+        });
+      }
+      
       // Simular inscripción
       await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Agregar a participaciones mock
+      const newParticipation = {
+        id: Date.now(),
+        userId,
+        activityId,
+        status: 'enrolled',
+        enrolledAt: new Date().toISOString(),
+        completedAt: null,
+        tokensEarned: 0,
+        rating: null,
+        feedback: null
+      };
+      
+      mockParticipations.push(newParticipation);
+      
       return Promise.resolve({
         success: true,
-        participationId: Date.now(),
+        participationId: newParticipation.id,
         tokensEarned: 0,
         message: 'Inscripción exitosa'
       });
@@ -260,6 +350,17 @@ class DataService {
       const activity = mockActivities.find(a => a.id == activityId);
       const tokensEarned = activity?.tokensReward || 0;
       
+      // Actualizar participación
+      const participationIndex = mockParticipations.findIndex(p => p.id === participationId);
+      if (participationIndex !== -1) {
+        mockParticipations[participationIndex] = {
+          ...mockParticipations[participationIndex],
+          status: 'completed',
+          completedAt: new Date().toISOString(),
+          tokensEarned
+        };
+      }
+      
       await new Promise(resolve => setTimeout(resolve, 1000));
       return Promise.resolve({
         success: true,
@@ -284,6 +385,22 @@ class DataService {
         tokensEarned: 10,
         message: 'Actividad completada (modo mock)'
       };
+    }
+  }
+
+  // ===== PARTICIPACIONES =====
+  async getUserParticipations(userId) {
+    if (this.mockMode) {
+      return Promise.resolve(mockParticipations.filter(p => p.userId === userId));
+    }
+    
+    try {
+      const response = await fetch(`${this.apiUrl}/users/${userId}/participations`);
+      if (!response.ok) throw new Error('Failed to fetch user participations');
+      return await response.json();
+    } catch (error) {
+      console.warn('API call failed, falling back to mock data:', error);
+      return mockParticipations.filter(p => p.userId === userId);
     }
   }
 
@@ -361,13 +478,35 @@ class DataService {
 
   async getTopUsers(limit = 5) {
     if (this.mockMode) {
-      return Promise.resolve(getTopUsers(limit));
+      // Obtener usuarios únicos y ordenados
+      const uniqueUsers = mockUsers.reduce((acc, user) => {
+        const exists = acc.find(u => u.address === user.address);
+        if (!exists) {
+          acc.push(user);
+        }
+        return acc;
+      }, []);
+      
+      const topUsers = uniqueUsers
+        .sort((a, b) => b.tokens - a.tokens)
+        .slice(0, limit)
+        .map((user, index) => ({
+          ...user,
+          rank: index + 1,
+          uniqueKey: `user-${user.id}-${user.address?.slice(-6)}-${index}` // Clave única adicional
+        }));
+      
+      return Promise.resolve(topUsers);
     }
     
     try {
       const response = await fetch(`${this.apiUrl}/users/top?limit=${limit}`);
       if (!response.ok) throw new Error('Failed to fetch top users');
-      return await response.json();
+      const users = await response.json();
+      return users.map((user, index) => ({
+        ...user,
+        uniqueKey: `user-${user.id}-${user.address?.slice(-6)}-${index}`
+      }));
     } catch (error) {
       console.warn('API call failed, falling back to mock data:', error);
       return getTopUsers(limit);

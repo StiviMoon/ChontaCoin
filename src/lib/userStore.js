@@ -120,55 +120,21 @@ const useUserStore = create(
         activities: []
       }),
       
-      // Mock data para desarrollo - actualizado
-      initMockData: () => set({
+      // Mock data actualizado - coincide con mockData.js
+      initRealUserData: (walletAddress, ensName = null) => set({
         user: {
-          id: 1,
-          name: 'Usuario Demo',
-          email: 'usuario@chontacoin.com',
-          address: '0x1234567890abcdef1234567890abcdef12345678',
-          joinedDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 días atrás
-          neighborhood: 'Centro, Yumbo'
+          id: Date.now(),
+          name: ensName || `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`,
+          email: null,
+          address: walletAddress,
+          ensName: ensName,
+          joinedDate: new Date().toISOString(),
+          neighborhood: 'Yumbo, Valle del Cauca'
         },
-        tokens: 150,
-        activities: [
-          {
-            id: 1,
-            name: 'Limpieza del parque central',
-            location: 'Parque Central',
-            date: '2025-01-05',
-            tokensEarned: 5,
-            completed: true,
-            completedAt: '2025-01-05T10:00:00Z',
-            enrolledAt: '2025-01-01T08:00:00Z',
-            status: 'completed',
-            type: 'limpieza'
-          },
-          {
-            id: 2,
-            name: 'Campaña de reciclaje',
-            location: 'Plaza Mayor',
-            date: '2025-01-10',
-            tokensEarned: 3,
-            completed: true,
-            completedAt: '2025-01-10T15:00:00Z',
-            enrolledAt: '2025-01-08T09:00:00Z',
-            status: 'completed',
-            type: 'reciclaje'
-          },
-          {
-            id: 3,
-            name: 'Taller de compostaje',
-            location: 'Centro Comunitario',
-            date: '2025-01-15',
-            tokensEarned: 7,
-            completed: false,
-            enrolledAt: '2025-01-12T14:00:00Z',
-            status: 'enrolled',
-            type: 'educacion'
-          }
-        ]
-      })
+        tokens: 0, // Empezar con 0 tokens reales
+        activities: [] // Sin actividades previas
+      }),
+
     }),
     {
       name: 'chonta-user-storage',

@@ -28,10 +28,22 @@ export const useChontaData = () => {
   const [error, setError] = useState(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // ===== INICIALIZACIÓN DEL USUARIO =====
+  // ===== FUNCIONES HELPER PARA DATOS REALES =====
+  const formatWalletAddress = useCallback((address) => {
+    if (!address) return 'Usuario Conectado';
+    return `${address.slice(0, 6)}...${address.slice(-4)}`;
+  }, []);
+
+  const generateUserName = useCallback((address, ensName) => {
+    if (ensName) return ensName;
+    if (address) return formatWalletAddress(address);
+    return 'Usuario Conectado';
+  }, [formatWalletAddress]);
+
+  // ===== INICIALIZACIÓN DEL USUARIO CON DATOS REALES =====
   useEffect(() => {
     const initializeUser = async () => {
-      console.log('🔄 Inicializando usuario...', { address, isConnected });
+      console.log('🔄 Inicializando usuario con datos reales...', { address, isConnected });
       
       if (!isConnected || !address) {
         console.log('❌ Wallet no conectada, limpiando usuario');
@@ -44,55 +56,75 @@ export const useChontaData = () => {
       setError(null);
 
       try {
-        console.log('📡 Obteniendo datos del usuario para:', address);
+        console.log('📡 Creando usuario con datos reales para:', address);
         
-        // Obtener o crear usuario basado en wallet address
-        const userData = await dataService.getCurrentUser(address);
-        console.log('👤 Datos del usuario obtenidos:', userData);
-        
-        // Combinar con datos de wallet real
-        const enhancedUser = {
-          ...userData,
+        // Crear usuario completamente basado en datos reales de la wallet
+        const realUserData = {
+          id: address, // Usar address como ID único
+          name: generateUserName(address, ensName),
+          email: null, // Sin email real desde wallet
           address: address,
-          ensName: ensName || userData.ensName || null,
+          ensName: ensName || null,
+          joinedDate: new Date().toISOString(), // Fecha actual
+          neighborhood: 'Yumbo, Valle del Cauca', // Tu ubicación real
+          tokens: 0, // Empezar con 0 tokens reales
+          completedActivities: 0, // Sin actividades completadas inicialmente
+          level: 'Ciudadano Nuevo', // Nivel inicial
+          avatar: null,
+          // Datos adicionales de la wallet
           walletBalance: balance?.formatted || '0',
           walletSymbol: balance?.symbol || 'ETH',
-          // Si no tiene nombre, usar ENS o generar uno basado en wallet
-          name: userData.name || ensName || `Usuario ${address.slice(0, 6)}`,
-          // Asegurar que tenga email si no existe
-          email: userData.email || `user${address.slice(0, 8)}@chontacoin.com`
+          walletBalanceUSD: balance?.value ? (parseFloat(balance.formatted) * 2000).toFixed(2) : '0', // Estimación
+          isRealUser: true // Flag para identificar usuario real
         };
 
-        console.log('✨ Usuario final:', enhancedUser);
+        console.log('✅ Usuario real creado:', realUserData);
 
-        // Actualizar stores
-        setUser(enhancedUser);
-        setTokens(userData.tokens || 0);
+        // Intentar obtener datos adicionales del servicio (si existen)
+        try {
+          const serviceData = await dataService.getCurrentUser(address, ensName);
+          if (serviceData && serviceData.tokens > 0) {
+            // Si hay datos guardados, usar tokens reales
+            realUserData.tokens = serviceData.tokens;
+            realUserData.completedActivities = serviceData.completedActivities || 0;
+            realUserData.level = serviceData.level || 'Ciudadano Nuevo';
+            console.log('📊 Datos del servicio integrados:', serviceData.tokens, 'tokens');
+          }
+        } catch (serviceError) {
+          console.log('ℹ️ No hay datos previos del servicio, usando datos frescos');
+        }
+
+        // Actualizar stores con datos reales
+        setUser(realUserData);
+        setTokens(realUserData.tokens);
         setIsInitialized(true);
+
+        console.log('🎉 Usuario inicializado con datos reales:', realUserData.name);
 
       } catch (err) {
         console.error('❌ Error al inicializar usuario:', err);
         
-        // Crear usuario básico si hay error
+        // Crear usuario básico con datos mínimos reales
         const fallbackUser = {
-          id: Date.now(),
-          name: ensName || `Usuario ${address.slice(0, 6)}`,
-          email: `user${address.slice(0, 8)}@chontacoin.com`,
+          id: address,
+          name: generateUserName(address, ensName),
+          email: null,
           address: address,
           ensName: ensName || null,
           joinedDate: new Date().toISOString(),
-          neighborhood: 'Cali, Valle del Cauca',
+          neighborhood: 'Yumbo, Valle del Cauca',
           tokens: 0,
           completedActivities: 0,
           level: 'Ciudadano Nuevo',
           walletBalance: balance?.formatted || '0',
-          walletSymbol: balance?.symbol || 'ETH'
+          walletSymbol: balance?.symbol || 'ETH',
+          isRealUser: true
         };
         
-        console.log('🔄 Usando usuario fallback:', fallbackUser);
+        console.log('🔄 Usando usuario fallback con datos reales:', fallbackUser);
         setUser(fallbackUser);
         setTokens(0);
-        setError('Usuario creado localmente');
+        setError('Usuario creado con datos básicos');
         setIsInitialized(true);
       } finally {
         setLoading(false);
@@ -103,7 +135,27 @@ export const useChontaData = () => {
     if (!isInitialized || storeUser?.address !== address) {
       initializeUser();
     }
-  }, [address, isConnected, ensName, balance?.formatted, balance?.symbol]);
+  }, [address, isConnected, ensName, balance?.formatted, balance?.symbol, generateUserName]);
+
+  // ===== EFECTO PARA ACTUALIZAR DATOS CUANDO CAMBIE LA WALLET =====
+  useEffect(() => {
+    if (isConnected && address && storeUser && storeUser.address === address) {
+      // Actualizar datos de wallet en tiempo real
+      const updatedUser = {
+        ...storeUser,
+        name: generateUserName(address, ensName),
+        ensName: ensName || null,
+        walletBalance: balance?.formatted || '0',
+        walletSymbol: balance?.symbol || 'ETH',
+        walletBalanceUSD: balance?.value ? (parseFloat(balance.formatted) * 2000).toFixed(2) : '0'
+      };
+      
+      if (JSON.stringify(updatedUser) !== JSON.stringify(storeUser)) {
+        console.log('🔄 Actualizando datos de wallet en tiempo real');
+        setUser(updatedUser);
+      }
+    }
+  }, [ensName, balance, address, isConnected, storeUser, generateUserName, setUser]);
 
   // ===== EFECTO PARA LIMPIAR CUANDO SE DESCONECTA =====
   useEffect(() => {
@@ -141,10 +193,10 @@ export const useChontaData = () => {
     try {
       setLoading(true);
       
-      // Llamar al servicio
+      // Llamar al servicio con datos reales
       const result = await dataService.enrollInActivity(
         activity.id, 
-        currentUser.id, 
+        currentUser.id, // Usar address como ID
         address
       );
 
@@ -159,9 +211,11 @@ export const useChontaData = () => {
           type: activity.category,
           status: 'enrolled',
           completed: false,
-          participationId: result.participationId
+          participationId: result.participationId,
+          enrolledAt: new Date().toISOString()
         });
 
+        console.log('✅ Inscrito en actividad:', activity.name);
         return result;
       } else {
         throw new Error(result.message || 'Error en la inscripción');
@@ -198,6 +252,16 @@ export const useChontaData = () => {
         const newTokenCount = storeTokens + result.tokensEarned;
         setTokens(newTokenCount);
 
+        // Actualizar nivel del usuario basado en tokens
+        const updatedUser = {
+          ...currentUser,
+          tokens: newTokenCount,
+          completedActivities: (currentUser.completedActivities || 0) + 1,
+          level: calculateUserLevel(newTokenCount)
+        };
+        setUser(updatedUser);
+
+        console.log('🎉 Actividad completada! Tokens ganados:', result.tokensEarned);
         return result;
       } else {
         throw new Error(result.message || 'Error al completar actividad');
@@ -208,7 +272,16 @@ export const useChontaData = () => {
     } finally {
       setLoading(false);
     }
-  }, [storeUser, completeActivity, storeTokens, setTokens]);
+  }, [storeUser, completeActivity, storeTokens, setTokens, setUser]);
+
+  // ===== FUNCIÓN PARA CALCULAR NIVEL BASADO EN TOKENS =====
+  const calculateUserLevel = useCallback((tokens) => {
+    if (tokens >= 500) return 'Ciudadano Gold';
+    if (tokens >= 300) return 'Ciudadano Silver';
+    if (tokens >= 100) return 'Ciudadano Bronze';
+    if (tokens >= 50) return 'Ciudadano Activo';
+    return 'Ciudadano Nuevo';
+  }, []);
 
   // ===== RECOMPENSAS =====
   const getRewards = useCallback(async (filters = {}) => {
@@ -249,6 +322,15 @@ export const useChontaData = () => {
         const newTokenCount = storeTokens - reward.cost;
         setTokens(newTokenCount);
 
+        // Actualizar nivel si es necesario
+        const updatedUser = {
+          ...currentUser,
+          tokens: newTokenCount,
+          level: calculateUserLevel(newTokenCount)
+        };
+        setUser(updatedUser);
+
+        console.log('🎁 Recompensa canjeada:', reward.name);
         return result;
       } else {
         throw new Error(result.message || 'Error en el canje');
@@ -259,7 +341,7 @@ export const useChontaData = () => {
     } finally {
       setLoading(false);
     }
-  }, [storeUser, storeTokens, setTokens]);
+  }, [storeUser, storeTokens, setTokens, setUser, calculateUserLevel]);
 
   // ===== ESTADÍSTICAS =====
   const getStats = useCallback(async () => {
@@ -326,8 +408,23 @@ export const useChontaData = () => {
     }
   }, [address, isConnected]);
 
+  // ===== INFORMACIÓN ADICIONAL DE LA WALLET =====
+  const getWalletInfo = useCallback(() => {
+    if (!address || !isConnected) return null;
+    
+    return {
+      address: address,
+      shortAddress: formatWalletAddress(address),
+      ensName: ensName,
+      balance: balance?.formatted || '0',
+      symbol: balance?.symbol || 'ETH',
+      balanceUSD: balance?.value ? (parseFloat(balance.formatted) * 2000).toFixed(2) : '0',
+      isConnected: isConnected
+    };
+  }, [address, ensName, balance, isConnected, formatWalletAddress]);
+
   return {
-    // Estado
+    // Estado del usuario real
     user: storeUser,
     tokens: storeTokens,
     activities: storeActivities,
@@ -354,6 +451,8 @@ export const useChontaData = () => {
     isEnrolledInActivity,
     clearError,
     refreshData,
+    getWalletInfo,
+    calculateUserLevel,
     
     // Configuración
     categories: dataService.getCategories(),

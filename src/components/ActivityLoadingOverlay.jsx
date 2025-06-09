@@ -39,13 +39,13 @@ export default function ActivityLoadingOverlay({
           // Después de mostrar éxito, cerrar
           setTimeout(() => {
             onComplete?.();
-          }, 6000);
+          }, 8000);
           
           return 100;
         }
         return prev + 12; // Incrementar progreso más suave
       });
-    }, 120);
+    }, 20);
 
     return () => clearInterval(progressInterval);
   }, [isVisible, onComplete]);

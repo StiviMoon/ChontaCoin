@@ -11,13 +11,16 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import Link from 'next/link';
 import { 
   Search,
   AlertCircle,
   Waves,
   User,
   X,
-  RefreshCw
+  RefreshCw,
+  Shield,
+  Filter
 } from 'lucide-react';
 
 export default function ActividadesPage() {
@@ -50,6 +53,7 @@ export default function ActividadesPage() {
   const [isEnrolling, setIsEnrolling] = useState(false);
   const [enrollingActivity, setEnrollingActivity] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
 
   // Cargar actividades al inicializar
   useEffect(() => {
@@ -150,7 +154,7 @@ export default function ActividadesPage() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6 px-4 sm:px-0">
       {/* Loading Overlay */}
       <ActivityLoadingOverlay
         isVisible={isEnrolling}
@@ -166,7 +170,7 @@ export default function ActividadesPage() {
         <Alert variant="destructive">
           <AlertCircle className="h-4 w-4" />
           <AlertDescription className="flex items-center justify-between">
-            <span>{error}</span>
+            <span className="text-sm">{error}</span>
             <Button
               variant="ghost"
               size="sm"
@@ -181,16 +185,16 @@ export default function ActividadesPage() {
 
       {/* Header */}
       <div className="text-center">
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <Waves className="h-8 w-8 text-blue-600" />
-          <h1 className="text-3xl font-bold text-gray-900">Río Cali</h1>
+        <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+          <Waves className="h-6 w-6 sm:h-8 sm:w-8 text-blue-600" />
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Río Cali</h1>
           {isMockMode && (
             <Badge variant="outline" className="text-xs">
-              Modo Demo
+              Demo
             </Badge>
           )}
         </div>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+        <p className="text-gray-600 text-sm sm:text-lg max-w-2xl mx-auto mb-3 sm:mb-4 px-2">
           Actividades comunitarias para cuidar nuestro río y ciudad. 
           {isConnected ? (
             <>Cada participación genera tokens verificados en blockchain.</>
@@ -198,93 +202,118 @@ export default function ActividadesPage() {
             <>Conecta tu wallet para participar y ganar tokens.</>
           )}
         </p>
+
+        {/* Admin Access Button */}
+        {isConnected && (
+          <div className="flex justify-center mb-4">
+            <Link href="/dashboard/admin">
+              <Button variant="outline" size="sm" className="flex items-center gap-2 bg-blue-50 border-blue-200 text-blue-700 hover:bg-blue-100">
+                <Shield className="h-4 w-4" />
+                <span className="hidden sm:inline">Panel de Organizador</span>
+                <span className="sm:hidden">Admin</span>
+              </Button>
+            </Link>
+          </div>
+        )}
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      {/* Stats - Responsivo */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         <Card>
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-blue-600">{stats.totalActivities}</p>
-            <p className="text-sm text-muted-foreground">Actividades</p>
+          <CardContent className="p-3 sm:p-4 text-center">
+            <p className="text-xl sm:text-2xl font-bold text-blue-600">{stats.totalActivities}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Actividades</p>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-green-600">{stats.tokensAvailable}</p>
-            <p className="text-sm text-muted-foreground">CHT disponibles</p>
+          <CardContent className="p-3 sm:p-4 text-center">
+            <p className="text-xl sm:text-2xl font-bold text-green-600">{stats.tokensAvailable}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">CHT disponibles</p>
           </CardContent>
         </Card>
         <Card>
-          <CardContent className="p-4 text-center">
-            <p className="text-2xl font-bold text-foreground">{tokens}</p>
-            <p className="text-sm text-muted-foreground">Mis tokens</p>
+          <CardContent className="p-3 sm:p-4 text-center">
+            <p className="text-xl sm:text-2xl font-bold text-foreground">{tokens}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Mis tokens</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Filters */}
+      {/* Filtros - Diseño móvil mejorado */}
       <Card>
-        <CardContent className="p-4">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-            {/* Search */}
-            <div className="lg:col-span-2">
+        <CardContent className="p-3 sm:p-4">
+          {/* Search y Toggle de filtros en móvil */}
+          <div className="flex gap-2 mb-3 sm:mb-4">
+            <div className="flex-1">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="text"
-                  placeholder="Buscar actividades..."
+                  placeholder="Buscar..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 text-sm"
                 />
               </div>
             </div>
+            
+            {/* Botón para mostrar filtros en móvil */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowFilters(!showFilters)}
+              className="sm:hidden flex-shrink-0"
+            >
+              <Filter className="h-4 w-4" />
+            </Button>
+          </div>
 
-            {/* Toggle */}
-            <div>
+          {/* Filtros - Visibles en desktop, colapsables en móvil */}
+          <div className={`${showFilters ? 'block' : 'hidden'} sm:block space-y-3 sm:space-y-0`}>
+            {/* Botones de acción */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-3 sm:mb-4">
               <Button
                 variant={showMyActivities ? "default" : "outline"}
                 onClick={() => setShowMyActivities(!showMyActivities)}
-                className="w-full"
+                className="w-full text-sm"
                 disabled={!isConnected}
+                size="sm"
               >
                 <User className="h-4 w-4 mr-2" />
                 {showMyActivities ? 'Ver todas' : 'Mis actividades'}
                 {showMyActivities && stats.myEnrolledCount > 0 && (
-                  <Badge variant="secondary" className="ml-2">
+                  <Badge variant="secondary" className="ml-2 text-xs">
                     {stats.myEnrolledCount}
                   </Badge>
                 )}
               </Button>
-            </div>
 
-            {/* Refresh */}
-            <div>
               <Button
                 variant="outline"
                 onClick={handleRefresh}
-                className="w-full"
+                className="w-full text-sm cursor-pointer"
                 disabled={loading}
+                size="sm"
               >
                 <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
                 Actualizar
               </Button>
             </div>
-          </div>
 
-          {/* Categories */}
-          <div className="flex gap-2 mt-4 overflow-x-auto">
-            {categories.map((category) => (
-              <Button
-                key={category.id}
-                variant={selectedCategory === category.id ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(category.id)}
-                className="whitespace-nowrap"
-              >
-                {category.name}
-              </Button>
-            ))}
+            {/* Categorías - Scroll horizontal en móvil */}
+            <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-thin">
+              {categories.map((category) => (
+                <Button
+                  key={category.id}
+                  variant={selectedCategory === category.id ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedCategory(category.id)}
+                  className="whitespace-nowrap flex-shrink-0 text-sm"
+                >
+                  {category.name}
+                </Button>
+              ))}
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -293,18 +322,18 @@ export default function ActividadesPage() {
       {!isConnected && (
         <Alert>
           <AlertCircle className="h-4 w-4" />
-          <AlertDescription>
+          <AlertDescription className="text-sm">
             Conecta tu wallet para inscribirte en actividades y ganar ChontaTokens.
           </AlertDescription>
         </Alert>
       )}
 
-      {/* Activities */}
+      {/* Activities - Grid responsivo */}
       {filteredActivities.length > 0 ? (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {filteredActivities.map((activity) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
+          {filteredActivities.map((activity, index) => (
             <ActivityCard
-              key={activity.id}
+              key={`activity-${activity.id || index}`}
               activity={activity}
               isEnrolled={isEnrolledInActivity(activity.id)}
               onEnroll={handleEnroll}
@@ -315,19 +344,19 @@ export default function ActividadesPage() {
         </div>
       ) : (
         <Card>
-          <CardContent className="p-12 text-center">
-            <Waves className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">
+          <CardContent className="p-8 sm:p-12 text-center">
+            <Waves className="h-8 w-8 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
               {showMyActivities ? 'No tienes actividades' : 'No hay actividades'}
             </h3>
-            <p className="text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground mb-4">
               {showMyActivities
                 ? 'Explora las actividades disponibles'
                 : 'Intenta cambiar los filtros'
               }
             </p>
             {showMyActivities && (
-              <Button onClick={() => setShowMyActivities(false)}>
+              <Button onClick={() => setShowMyActivities(false)} size="sm">
                 Ver todas
               </Button>
             )}
@@ -335,18 +364,18 @@ export default function ActividadesPage() {
         </Card>
       )}
 
-      {/* Blockchain info */}
+      {/* Blockchain info - Mejorado para móvil */}
       <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-        <CardContent className="p-4 text-center">
-          <p className="text-sm text-blue-800 font-medium mb-1">
+        <CardContent className="p-3 sm:p-4 text-center">
+          <p className="text-xs sm:text-sm text-blue-800 font-medium mb-1">
             🔗 Verificado por Ethereum
           </p>
-          <p className="text-xs text-blue-600">
+          <p className="text-xs text-blue-600 mb-1">
             Cada participación queda registrada de forma transparente en blockchain
           </p>
           {currentUser?.address && (
-            <p className="text-xs text-blue-500 mt-1">
-              Wallet conectada: {currentUser.address.slice(0, 6)}...{currentUser.address.slice(-4)}
+            <p className="text-xs text-blue-500">
+              Wallet: {currentUser.address.slice(0, 6)}...{currentUser.address.slice(-4)}
             </p>
           )}
         </CardContent>

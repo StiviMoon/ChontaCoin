@@ -43,9 +43,9 @@ const menuItems = [
     path: '/dashboard/mapa' 
   },
   { 
-    name: 'Perfil', 
+    name: 'Admin', 
     icon: User, 
-    path: '/dashboard/perfil' 
+    path: '/dashboard/admin' 
   },
 ];
 
@@ -138,7 +138,7 @@ export default function Sidebar({ isOpen, onClose }) {
             <button 
               onClick={handleLogout}
               disabled={isLoggingOut}
-              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             >
               {isLoggingOut ? (
                 <>
