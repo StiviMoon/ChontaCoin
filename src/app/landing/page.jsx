@@ -138,33 +138,13 @@ export default function ChontaTokenLanding() {
 
   // Estadísticas animadas
   const stats = [
-    { value: "25", label: "Árboles Plantados", icon: TreePine },
-    { value: "15.2t", label: "CO₂ Reducido", icon: Globe },
-    { value: "120+", label: "Ciudadanos Activos", icon: Users },
-    { value: "9", label: "Espacios Recuperados", icon: MapPin }
+    { value: "", label: "Cultivo de microalgas", icon: TreePine },
+    { value: "", label: " Reducción de CO₂ ", icon: Globe },
+    { value: "", label: "Participación ciudadana", icon: Users },
+    { value: "", label: " Recuperación de espacios", icon: MapPin }
   ]
 
-  // Testimonios
-  const testimonials = [
-    {
-      name: "María García",
-      role: "Líder Comunitaria",
-      content: "ChontaToken ha transformado la forma en que nuestra comunidad participa en actividades ambientales. Ahora todos están motivados.",
-      rating: 5
-    },
-    {
-      name: "Carlos Ruiz",
-      role: "Estudiante Universitario",
-      content: "Me encanta poder ganar tokens mientras ayudo a mi ciudad. Es una forma innovadora de crear conciencia ambiental.",
-      rating: 5
-    },
-    {
-      name: "Ana López",
-      role: "Comerciante Local",
-      content: "Como comercio aliado, hemos visto un aumento en clientes comprometidos con el medio ambiente. Es ganar-ganar.",
-      rating: 5
-    }
-  ]
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -178,12 +158,15 @@ export default function ChontaTokenLanding() {
           <div className="flex justify-between items-center py-4">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                <Leaf className="w-6 h-6 text-white" />
-              </div>
-              <span className=" text-2xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
-                ChontaToken
-              </span>
+              <Image
+                src="/recurso 2logo.png"
+                alt="Logo ChontaToken"
+                width={180}
+                height={56}
+                className="object-contain"
+                priority
+              />
+              
             </div>
 
             {/* Desktop Navigation */}
@@ -301,22 +284,17 @@ export default function ChontaTokenLanding() {
                 </div>
                 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Transforma tu ciudad,
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-600">
-                    gana recompensas reales
-                  </span>
+                  Transforma a Cali en una ciudad <span className="text-green-600">más verde y sostenible</span>
                 </h1>
                 
-                <p className="text-xl text-gray-600 leading-relaxed">
-                  Únete a más de <span className="font-semibold text-green-600">1,200 ciudadanos</span> que ya están ganando tokens mientras cuidan el medio ambiente en Cali.
-                </p>
+                
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button
                   size="lg"
                   onClick={handleConnectWallet}
-                  className="text-lg px-8 py-6 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg transform hover:scale-105 transition-all cursor-pointer"
+                  className="text-lg px-8 py-6 bg-gradient-to-r from-yellow-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg transform hover:scale-105 transition-all cursor-pointer"
                 >
                   {isConnected ? 'Ir al Dashboard' : 'Comenzar Ahora'}
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -335,14 +313,96 @@ export default function ChontaTokenLanding() {
               {/* Trust Indicators */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-8 border-t">
                 {stats.map((stat, index) => {
+                  if (stat.label.trim().toLowerCase() === "cultivo de microalgas") {
+                    return (
+                      <div key={index} className="flex flex-col items-center justify-center text-center">
+                        <div className="flex justify-center mb-2">
+                          <Image
+                            src="/microalga1.png"
+                            alt="Cultivo de microalgas"
+                            width={50}
+                            height={50}
+                            className="object-contain rounded-full"
+                          />
+                        </div>
+                        <p className="text-base font-bold text-gray-900">{stat.label.trim()}</p>
+                      </div>
+                    )
+                  }
+
+                  if (stat.label.trim().toLowerCase() === "participación ciudadana") {
+                    return (
+                      <div key={index} className="flex flex-col items-center justify-center text-center">
+                        <div className="flex justify-center mb-2">
+                          <Image
+                            src="/sociedad.png"
+                            alt="Participación ciudadana"
+                            width={50}
+                            height={50}
+                            className="object-contain rounded-full"
+                          />
+                        </div>
+                        <p className="text-base font-bold text-gray-900">{stat.label.trim()}</p>
+                      </div>
+                    )
+                  }
+
+                  if (stat.label.trim().toLowerCase() === "recuperación de espacios") {
+                    return (
+                      <div key={index} className="flex flex-col items-center justify-center text-center">
+                        <div className="flex justify-center mb-2">
+                          <div
+                            style={{
+                              width: 50,
+                              height: 50,
+                              background: "#fff",
+                              borderRadius: "50%",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              overflow: "hidden",
+                              border: "2px " // opcional: borde gris claro
+                            }}
+                          >
+                            <Image
+                              src="/cambio.png"
+                              alt="Recuperación de espacios"
+                              width={44}
+                              height={44}
+                              style={{ objectFit: "contain", objectPosition: "center" }}
+                            />
+                          </div>
+                        </div>
+                        <p className="text-base font-bold text-gray-900">{stat.label.trim()}</p>
+                      </div>
+                    )
+                  }
+
+                  if (stat.label.trim().toLowerCase() === "reducción de co₂") {
+                    return (
+                      <div key={index} className="flex flex-col items-center justify-center text-center">
+                        <div className="flex justify-center mb-2">
+                          <Image
+                            src="/Co.png"
+                            alt="Reducción de CO₂"
+                            width={50}
+                            height={50}
+                            className="object-contain rounded-full"
+                          />
+                        </div>
+                        <p className="text-base font-bold text-gray-900">{stat.label.trim()}</p>
+                      </div>
+                    )
+                  }
+
+                  // Otros stats igual que antes
                   const Icon = stat.icon
                   return (
-                    <div key={index} className="text-center">
+                    <div key={index} className="flex flex-col items-center justify-center text-center">
                       <div className="flex justify-center mb-2">
                         <Icon className="w-5 h-5 text-green-600" />
                       </div>
-                      <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
-                      <p className="text-sm text-gray-600">{stat.label}</p>
+                      <p className="text-base font-bold text-gray-900">{stat.label.trim()}</p>
                     </div>
                   )
                 })}
@@ -351,16 +411,15 @@ export default function ChontaTokenLanding() {
 
             {/* Hero Image/Animation */}
             <div className="relative">
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-                <div className="aspect-video bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <TreePine className="w-24 h-24 mx-auto mb-4 animate-pulse" />
-                    <h3 className="text-2xl font-bold mb-2">Demo Interactivo</h3>
-                    <p>Próximamente</p>
-                  </div>
-                </div>
-              </div>
-              
+              {/* Solo la ilustración, sin caja verde */}
+              <Image
+                src="/Cali.tiff"
+                alt="Ilustración ChontaToken"
+                width={320}
+                height={180}
+                className="mx-auto object-contain rounded-2xl shadow-2xl"
+              />
+
               {/* Floating Cards */}
               <div className="absolute -top-4 -right-4 bg-white rounded-lg shadow-lg p-3 animate-float">
                 <div className="flex items-center gap-2">
@@ -368,8 +427,7 @@ export default function ChontaTokenLanding() {
                     <TrendingUp className="w-4 h-4 text-green-600" />
                   </div>
                   <div>
-                    <p className="text-xs text-gray-500">Tokens Ganados</p>
-                    <p className="font-bold text-green-600">+50 CHT</p>
+                    <p className="text-xs text-gray-500">Lideres en proyectos ambientales</p>
                   </div>
                 </div>
               </div>
@@ -377,11 +435,17 @@ export default function ChontaTokenLanding() {
               <div className="absolute -bottom-4 -left-4 bg-white rounded-lg shadow-lg p-3 animate-float-delayed">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Users className="w-4 h-4 text-blue-600" />
+                    <Image
+                      src="/sociedad.png"
+                      alt="Participación ciudadana"
+                      width={24}
+                      height={24}
+                      className="object-contain"
+                    />
                   </div>
                   <div>
                     <p className="text-xs text-gray-500">Participantes</p>
-                    <p className="font-bold text-blue-600">200+</p>
+                    {/* <p className="font-bold text-blue-600">200+</p> */}
                   </div>
                 </div>
               </div>
@@ -390,83 +454,100 @@ export default function ChontaTokenLanding() {
         </div>
       </section>
 
-      {/* Trust Section */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-            <div className="flex flex-wrap gap-12 items-center">
-              <span className="text-lg font-semibold text-gray-700">Alcaldía de Cali</span>
-              <span className="text-lg font-semibold text-gray-700">Universidad del Valle</span>
-              <span className="text-lg font-semibold text-gray-700">Fundación Carvajal</span>
-              <span className="text-lg font-semibold text-gray-700">CVC</span>
-            </div>
-          </div>
-        </div>
-      </section>
+     
 
-      {/* ¿Qué es Chonta Token? - Mejorado */}
+      
       <section id="¿Que es?" className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             {/* Header */}
             <div className="text-center space-y-4 mb-16">
-              <Badge className="bg-blue-100 text-blue-800 border-blue-200">
+              {/* <Badge className="bg-blue-100 text-blue-800 border-blue-200">
                 <Info className="mr-1 w-3 h-3" />
                 Sobre el Proyecto
-              </Badge>
+              </Badge> */}
               <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-                ¿Qué es Chonta Token?
+                ¿Qué es Chontacoin?
               </h2>
               <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-                La primera plataforma blockchain que recompensa el activismo ambiental en Colombia
+                La primera plataforma blockchain que promueve el activismo ambiental en Colombia 
               </p>
             </div>
 
             {/* Cards Grid */}
             <div className="grid md:grid-cols-3 gap-6 mb-16">
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
-                <CardHeader>
-                  <div className="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center mb-4">
-                    <Leaf className="w-7 h-7 text-green-600" />
-                  </div>
-                  <CardTitle>Blockchain Verde</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    Tecnología descentralizada que garantiza transparencia total en cada recompensa ambiental otorgada.
-                  </p>
-                </CardContent>
+             <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+  <CardHeader>
+    <div className="w-14 h-14 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center mb-4">
+      {/* Microalga animada */}
+      <span className="relative block w-10 h-10">
+        {/* Cuerpo */}
+        <span
+          className="absolute left-0 top-0 w-10 h-10 rounded-full border-4 border-[#168aad] bg-[#76c893] shadow-inner"
+          style={{
+            boxShadow: "inset 0 0 10px rgba(0,0,0,0.2)",
+            animation: "microalga-rotar 12s linear infinite"
+          }}
+        >
+          {/* Cloroplastos */}
+          <span className="absolute w-3.5 h-2.5 bg-[#b5e48c] rounded-full" style={{ top: "20px", left: "10px", transform: "rotate(15deg)" }} />
+          <span className="absolute w-3.5 h-2.5 bg-[#b5e48c] rounded-full" style={{ top: "30px", left: "28px", transform: "rotate(15deg)" }} />
+          <span className="absolute w-3.5 h-2.5 bg-[#b5e48c] rounded-full" style={{ top: "40px", left: "16px", transform: "rotate(15deg)" }} />
+          {/* Núcleo */}
+          <span className="absolute w-5 h-5 bg-[#52b788] rounded-full" style={{
+            top: "18px",
+            left: "18px",
+            boxShadow: "inset 0 0 5px rgba(0,0,0,0.2)"
+          }} />
+        </span>
+        {/* Flagelo eliminado */}
+      </span>
+    </div>
+    <CardTitle>Blockchain Verde</CardTitle>
+  </CardHeader>
+  <CardContent>
+  <p className="text-gray-600 text-left">
+    Tecnología descentralizada que garantiza transparencia total en cada recompensa ambiental otorgada.
+  </p>
+</CardContent>
               </Card>
 
+             <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
+  <CardHeader>
+    <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4">
+ {/* Ícono animado economía circular */}
+    <div className="circular-icon" aria-label="Economía circular" role="img">
+      <span className="flecha flecha1"></span>
+      <span className="flecha flecha2"></span>
+      <span className="flecha flecha3"></span>
+    </div>
+    </div>
+    <CardTitle>Economía Circular</CardTitle>
+  </CardHeader>
+  <CardContent>
+  <p className="text-gray-600 text-left">
+    Tokens que puedes canjear por beneficios reales en comercios locales comprometidos.
+  </p>
+   
+  </CardContent>
+</Card>
               <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 <CardHeader>
-                  <div className="w-14 h-14 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4">
-                    <Coins className="w-7 h-7 text-blue-600" />
-                  </div>
-                  <CardTitle>Economía Circular</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600">
-                    Tokens que puedes canjear por beneficios reales en comercios locales comprometidos.
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
-                <CardHeader>
-                  <div className="w-14 h-14 bg-gradient-to-br from-purple-100 to-pink-100 rounded-xl flex items-center justify-center mb-4">
-                    <Users className="w-7 h-7 text-purple-600" />
-                  </div>
+<div className="w-14 h-14 bg-gradient-to-br from-green-100 to-pink-100 rounded-xl flex items-center justify-center mb-4">
+  <span className="relative flex h-8 w-8">
+    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+    <span className="relative inline-flex rounded-full h-8 w-8 bg-green-600"></span>
+  </span>
+</div>
                   <CardTitle>Impacto Colectivo</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">
+                  <p className="text-gray-600 text-left">
                     Una comunidad activa que trabaja unida para transformar Cali en una ciudad modelo.
                   </p>
                 </CardContent>
               </Card>
             </div>
-
             {/* Feature Highlights */}
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-8">
               <div className="grid md:grid-cols-2 gap-8 items-center">
@@ -495,7 +576,13 @@ export default function ChontaTokenLanding() {
                 </div>
                 <div className="text-center">
                   <div className="inline-flex items-center justify-center w-32 h-32 bg-white rounded-full shadow-lg">
-                    <BarChart3 className="w-16 h-16 text-green-600" />
+                    <Image
+                      src="/transparencia.png"
+                      alt="100% Transparente"
+                      width={80}
+                      height={80}
+                      className="object-contain"
+                    />
                   </div>
                   <p className="mt-4 text-lg font-semibold text-gray-900">
                     100% Transparente
@@ -511,15 +598,12 @@ export default function ChontaTokenLanding() {
       <section id="¿Funciona?" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
-            <Badge className="bg-green-100 text-green-800 border-green-200">
-              <Target className="mr-1 w-3 h-3" />
-              Proceso Simple
-            </Badge>
+           
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              ¿Cómo funciona Chonta Token?
+              ¿Cómo funciona Chontacoin?
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              4 pasos simples para comenzar a ganar mientras cuidas tu ciudad
+              4 pasos simples para comenzar a ganar mientras cuidas a Cali
             </p>
           </div>
 
@@ -536,23 +620,23 @@ export default function ChontaTokenLanding() {
                 {
                   step: 2,
                   title: "Únete a Actividades",
-                  description: "Elige entre decenas de actividades ambientales verificadas en tu zona.",
+                  description: "Elige entre las actividades ambientales que tenemos disponibles.",
                   icon: Users,
-                  color: "blue"
+                  color: "orange"
                 },
                 {
                   step: 3,
                   title: "Participa y Verifica",
-                  description: "Completa actividades y súbelas con foto y ubicación para verificación.",
+                  description: "Completa actividades y súbelas con foto, ubicación  para verificación.",
                   icon: CheckCircle,
-                  color: "purple"
+                  color: "orange"
                 },
                 {
                   step: 4,
                   title: "Gana Tokens",
                   description: "Recibe CHT tokens instantáneamente y canjéalos por recompensas reales.",
                   icon: Coins,
-                  color: "orange"
+                  color: "green"
                 }
               ].map((item, index) => (
                 <div key={index} className="relative">
@@ -591,9 +675,8 @@ export default function ChontaTokenLanding() {
                 Comenzar Ahora
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              <p className="mt-4 text-sm text-gray-600">
-                No necesitas experiencia previa • Setup en menos de 2 minutos
-              </p>
+             
+      
             </div>
           </div>
         </div>
@@ -603,12 +686,9 @@ export default function ChontaTokenLanding() {
       <section id="Actividades" className="py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
-            <Badge className="bg-blue-100 text-blue-800 border-blue-200">
-              <ActivityIcon className="mr-1 w-3 h-3" />
-              Actividades Disponibles
-            </Badge>
+            
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              Gana Tokens con Cada Acción
+              Gana Tokens con cada acción
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Múltiples formas de contribuir y ganar recompensas todos los días
@@ -618,65 +698,39 @@ export default function ChontaTokenLanding() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
-                title: "Jornadas de Reciclaje",
-                description: "Separa y recicla residuos en puntos autorizados de tu comunidad.",
-                reward: "50-100 CHT",
-                icon: Recycle,
-                color: "green",
-                difficulty: "Fácil",
-                time: "2 horas",
-                next: "Todos los días"
-              },
-              {
-                title: "Siembra de Árboles",
-                description: "Participa en jornadas de reforestación urbana y rural.",
+                title: "Cultivo de microalgas",
+                description: "Participa en jornadas de cultivo de microalgas para contribuir en el mantenimiento del río cauca.",
                 reward: "75-150 CHT",
-                icon: TreePine,
-                color: "blue",
+              
+                color: "green",
                 difficulty: "Media",
                 time: "4 horas",
-                next: "Sábados"
+                next: "Sábados",
+                customIcon: "/microalga1.png" 
               },
               {
                 title: "Limpieza Comunitaria",
-                description: "Organiza o únete a limpiezas de parques y espacios públicos.",
+                description: "Únete a la limpieza de zonas alrededor del río Cauca y parques",
                 reward: "25-75 CHT",
                 icon: Heart,
-                color: "purple",
+                color: "orange",
                 difficulty: "Fácil",
                 time: "3 horas",
-                next: "Domingos"
+                next: "Domingos",
+                customIcon: "/limpieza comunitaria.png"
               },
               {
                 title: "Educación Ambiental",
-                description: "Imparte o asiste a talleres sobre sostenibilidad.",
+                description: "Asiste a talleres y charlas sobre sostenibilidad y medio ambiente.",
                 reward: "40-80 CHT",
-                icon: Globe,
-                color: "teal",
+              
+                color: "green",
                 difficulty: "Media",
                 time: "2 horas",
-                next: "Martes y Jueves"
+                next: "Martes y Jueves",
+                customIcon: "/educacion.png"
               },
-              {
-                title: "Ahorro Energético",
-                description: "Implementa y comparte prácticas de eficiencia energética.",
-                reward: "30-60 CHT",
-                icon: Zap,
-                color: "orange",
-                difficulty: "Fácil",
-                time: "Continuo",
-                next: "Siempre"
-              },
-              {
-                title: "Voluntariado Social",
-                description: "Apoya proyectos socioambientales en comunidades vulnerables.",
-                reward: "60-120 CHT",
-                icon: Users,
-                color: "pink",
-                difficulty: "Alta",
-                time: "6 horas",
-                next: "Fines de semana"
-              }
+              
             ].map((activity, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden">
                 <div className={`h-2 bg-gradient-to-r ${
@@ -696,7 +750,17 @@ export default function ChontaTokenLanding() {
                 <CardHeader>
                   <div className="flex justify-between items-start mb-4">
                     <div className={`w-12 h-12 rounded-lg flex items-center justify-center bg-${activity.color}-100`}>
-                      <activity.icon className={`w-6 h-6 text-${activity.color}-600`} />
+                      {activity.customIcon ? (
+                        <Image
+                          src={activity.customIcon}
+                          alt={activity.title}
+                          width={45}
+                          height={45}
+                          className="object-contain"
+                        />
+                      ) : (
+                        <activity.icon className={`w-6 h-6 text-${activity.color}-600`} />
+                      )}
                     </div>
                     <Badge variant="secondary" className="bg-green-100 text-green-800">
                       {activity.reward}
@@ -723,16 +787,6 @@ export default function ChontaTokenLanding() {
               </Card>
             ))}
           </div>
-
-          <div className="mt-12 text-center">
-            <p className="text-gray-600 mb-4">
-              ¿No encuentras una actividad que te guste?
-            </p>
-            <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50">
-              Proponer Nueva Actividad
-              <ArrowRight className="ml-2 w-4 h-4" />
-            </Button>
-          </div>
         </div>
       </section>
 
@@ -745,14 +799,11 @@ export default function ChontaTokenLanding() {
               Marketplace de Recompensas
             </Badge>
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              Convierte tus Tokens en Beneficios Reales
+              Convierte tus Tokens en beneficios reales
             </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Más de 50 comercios aliados donde puedes canjear tus CHT
-            </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <div className="flex flex-wrap justify-center gap-6 mb-12">
             {[
               {
                 title: "Descuentos Comerciales",
@@ -764,124 +815,59 @@ export default function ChontaTokenLanding() {
               },
               {
                 title: "Transporte Gratuito",
-                description: "Viajes gratis en MIO y bicicletas públicas",
+                description: "Viajes gratis en MIO ",
                 cost: "50 CHT",
                 icon: MapPin,
                 available: true,
                 popular: false
-              },
-              {
-                title: "Eco-Productos",
-                description: "Kits de productos sostenibles y ecológicos",
-                cost: "200 CHT",
-                icon: Leaf,
-                available: true,
-                popular: true
-              },
-              {
-                title: "Experiencias Únicas",
-                description: "Tours ecológicos y actividades culturales",
-                cost: "300 CHT",
-                icon: Heart,
-                available: false,
-                popular: false
               }
             ].map((reward, index) => (
-              <Card key={index} className="relative border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
-                {reward.popular && (
-                  <div className="absolute -top-3 right-4 z-10">
-                    <Badge className="bg-orange-500 text-white">
-                      <Star className="mr-1 w-3 h-3" />
-                      Popular
-                    </Badge>
-                  </div>
-                )}
-                
-                <CardHeader className="text-center pt-8">
-                  <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center shadow-lg ${
-                    reward.available 
-                      ? 'bg-gradient-to-br from-green-400 to-emerald-500' 
-                      : 'bg-gray-300'
-                  }`}>
-                    <reward.icon className="w-8 h-8 text-white" />
-                  </div>
-                  <CardTitle className="mt-4">{reward.title}</CardTitle>
-                </CardHeader>
-                
-                <CardContent className="text-center">
-                  <p className="text-gray-600 mb-4">{reward.description}</p>
-                  <div className="space-y-2">
-                    <p className="text-2xl font-bold text-green-600">{reward.cost}</p>
-                    <Button 
-                      className={`w-full ${
-                        reward.available
-                          ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
-                          : 'bg-gray-400 cursor-not-allowed'
-                      }`}
-                      disabled={!reward.available}
-                    >
-                      {reward.available ? 'Canjear Ahora' : 'Próximamente'}
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          {/* Partners */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg">
-            <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">
-              Algunos de Nuestros Comercios Aliados
-            </h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <div key={i} className="h-20 bg-gray-100 rounded-lg flex items-center justify-center">
-                  <span className="text-gray-400 text-sm">Logo Aliado {i + 1}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonios */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center space-y-4 mb-16">
-            <Badge className="bg-purple-100 text-purple-800 border-purple-200">
-              <MessageCircle className="mr-1 w-3 h-3" />
-              Testimonios
-            </Badge>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              Lo que Dicen Nuestros Usuarios
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="border-0 shadow-lg">
-                <CardHeader>
-                  <div className="flex gap-1 mb-3">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <CardDescription className="text-gray-700">
-                    "{testimonial.content}"
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
-                    <div>
-                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                      <p className="text-sm text-gray-600">{testimonial.role}</p>
+              <div
+                key={index}
+                className="flex justify-center w-full md:w-auto"
+                style={{ minWidth: 288, maxWidth: 320, flex: "1 1 320px" }} // Fuerza mismo ancho mínimo/máximo
+              >
+                <Card className="relative border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 w-full max-w-xs mx-auto flex flex-col h-full">
+                  {reward.popular && (
+                    <div className="absolute -top-3 right-4 z-10">
+                      <Badge className="bg-orange-500 text-white">
+                        <Star className="mr-1 w-3 h-3" />
+                        Popular
+                      </Badge>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  )}
+                  <CardHeader className="text-center pt-8">
+                    <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center shadow-lg ${
+                      reward.available 
+                        ? 'bg-gradient-to-br from-green-400 to-emerald-500' 
+                        : 'bg-gray-300'
+                    }`}>
+                      <reward.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <CardTitle className="mt-4">{reward.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-center flex-1 flex flex-col justify-between">
+                    <p className="text-gray-600 mb-4">{reward.description}</p>
+                    <div className="space-y-2">
+                      <p className="text-2xl font-bold text-green-600">{reward.cost}</p>
+                      <Button 
+                        className={`w-full ${
+                          reward.available
+                            ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
+                            : 'bg-gray-400 cursor-not-allowed'
+                        }`}
+                        disabled={!reward.available}
+                      >
+                        {reward.available ? 'Canjear Ahora' : 'Próximamente'}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
           </div>
+
+         
         </div>
       </section>
 
@@ -889,34 +875,48 @@ export default function ChontaTokenLanding() {
       <section id="Mapa" className="py-20 bg-white m-12">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
-            <Badge variant="secondary" className="w-fit mx-auto bg-blue-100 text-blue-800">
-              Impacto Real
-            </Badge>
+          
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">Mapa de Impacto en Cali</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Visualiza el impacto positivo que estamos generando juntos en nuestra ciudad
+              Visualiza las áreas en las que queremos generar un impacto positivo en nuestra ciudad
             </p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="grid grid-cols-2 gap-6">
-                <div className="text-center p-6 bg-green-50 rounded-2xl">
-                  <div className="text-3xl font-bold text-green-600 mb-2">2,450</div>
-                  <div className="text-gray-600">Árboles Plantados</div>
+                <div className="text-center p-6 bg-green-50 rounded-2xl flex flex-col items-center justify-center">
+                  <Image
+                    src="/microalga1.png"
+                    alt="Microalga"
+                    width={100}
+                    height={100}
+                    className="object-contain mx-auto"
+                  />
+                  <p className="mt-3 text-green-700 font-semibold text-lg">Cultivos de microalgas</p>
                 </div>
-                <div className="text-center p-6 bg-blue-50 rounded-2xl">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">15.2</div>
-                  <div className="text-gray-600">Toneladas Recicladas</div>
+                <div className="text-center p-6 bg-blue-50 rounded-2xl flex flex-col items-center justify-center">
+                  <Image
+                    src="/limpieza comunitaria1.png"
+                    alt="Limpieza comunitaria"
+                    width={80}
+                    height={80}
+                    className="object-contain mx-auto"
+                  />
+                  <div className="text-green-700 font-semibold text-lg mt-3">Limpieza comunitaria</div>
                 </div>
-                <div className="text-center p-6 bg-purple-50 rounded-2xl">
-                  <div className="text-3xl font-bold text-purple-600 mb-2">89</div>
-                  <div className="text-gray-600">Espacios Limpiados</div>
-                </div>
+                
                 <div className="text-center p-6 bg-orange-50 rounded-2xl">
-                  <div className="text-3xl font-bold text-orange-600 mb-2">1,200</div>
-                  <div className="text-gray-600">Participantes Activos</div>
-                </div>
+                 
+                  <Image
+                    src="/Ciudadana.png"
+                    alt="Participación ciudadana"
+                    width={80}
+                    height={80}
+                    className="object-contain mx-auto"
+                  />
+                   <p className="mt-3 text-orange-700 font-semibold text-lg">Participación ciudadana</p>
+              </div>
               </div>
 
               <div className="space-y-4">
@@ -936,29 +936,33 @@ export default function ChontaTokenLanding() {
                     </div>
                     <Badge className="bg-blue-100 text-blue-800">Media Actividad</Badge>
                   </div>
-                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <div className="flex items-center space-x-3">
-                      <MapPin className="w-5 h-5 text-purple-600" />
-                      <span className="font-medium">Comuna 22 - Montebello</span>
-                    </div>
-                    <Badge className="bg-purple-100 text-purple-800">Creciendo</Badge>
-                  </div>
                 </div>
               </div>
             </div>
 
             <div className="relative">
-              <div className="aspect-square bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl flex items-center justify-center">
-                <div className="text-center space-y-4">
-                  <MapPin className="w-16 h-16 text-green-600 mx-auto" />
-                  <h3 className="text-2xl font-semibold text-gray-900">Mapa Interactivo</h3>
-                  <p className="text-gray-600 max-w-sm">
-                    Próximamente: Mapa interactivo en tiempo real mostrando todas las actividades y su impacto en Cali
-                  </p>
-                  <Button variant="outline" className="border-green-600 text-green-600 hover:bg-green-50">
-                    Ver Mapa Completo
-                  </Button>
-                </div>
+              <div className="aspect-square bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl flex items-center justify-center overflow-hidden shadow-lg">
+                {/* Mapa Interactivo real (puedes cambiar el src por tu propio mapa) */}
+                <iframe
+                  title="Mapa de Impacto Chontacoin"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.870167944447!2d-76.5320066846757!3d3.451646497495384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6e5e5e5e5e5%3A0x1234567890abcdef!2sCali%2C%20Valle%20del%20Cauca!5e0!3m2!1ses!2sco!4v1717777777777!5m2!1ses!2sco"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0, minHeight: 320, minWidth: 320 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="rounded-2xl"
+                ></iframe>
+              </div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <MapPin className="w-16 h-16 text-green-600 mb-2 drop-shadow-lg" />
+                <h3 className="text-2xl font-semibold text-gray-900 bg-white/80 px-4 py-1 rounded-lg mb-2">
+                  Mapa Interactivo de Impacto
+                </h3>
+                <p className="text-gray-700 bg-white/80 px-4 py-1 rounded-lg text-center max-w-xs">
+                  Explora en tiempo real las zonas y actividades que se piensan llevar a cabo en Chontacoin.
+                </p>
               </div>
             </div>
           </div>
@@ -969,12 +973,9 @@ export default function ChontaTokenLanding() {
       <section id="FAQ" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-16">
-            <Badge className="bg-green-100 text-green-800 border-green-200">
-              <HelpCircle className="mr-1 w-3 h-3" />
-              Preguntas Frecuentes
-            </Badge>
+            
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              Todo lo que Necesitas Saber
+              Todo lo que necesitas saber
             </h2>
           </div>
 
@@ -1001,10 +1002,8 @@ export default function ChontaTokenLanding() {
                   question: "¿Qué pasa si pierdo acceso a mi wallet?",
                   answer: "Es importante guardar tu frase de recuperación en un lugar seguro. Si la pierdes, no podremos recuperar tu acceso. Por eso ofrecemos guías detalladas de seguridad."
                 },
-                {
-                  question: "¿Cómo puedo proponer nuevas actividades?",
-                  answer: "Los usuarios con más de 100 CHT pueden proponer actividades. Estas son revisadas por la comunidad y, si se aprueban, se añaden al catálogo."
-                }
+                
+            
               ].map((item, index) => (
                 <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg px-6 border shadow-sm">
                   <AccordionTrigger className="text-left hover:no-underline">
@@ -1062,10 +1061,15 @@ export default function ChontaTokenLanding() {
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-600 to-emerald-600 rounded-xl flex items-center justify-center">
-                  <Leaf className="w-6 h-6 text-white" />
-                </div>
-                <span className="text-xl font-bold">ChontaToken</span>
+                {/* Cambia el texto y/o agrega un logo aquí */}
+                <Image
+                  src="/recurso 2logo.png"
+                  alt="Logo ChontaToken"
+                  width={160}
+                  height={160}
+                  className="object-contain"
+                />
+                <span className="text-xl font-bold text-green-400"></span>
               </div>
               <p className="text-gray-400">
                 Transformando Cali a través de la tecnología blockchain y el compromiso ciudadano.
@@ -1158,7 +1162,7 @@ export default function ChontaTokenLanding() {
           <div className="border-t border-gray-800 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4">
               <p className="text-gray-400 text-center md:text-left">
-                &copy; {new Date().getFullYear()} ChontaToken. Todos los derechos reservados.
+                &copy; {new Date().getFullYear()} Chontacoin. Todos los derechos reservados.
               </p>
               <div className="flex items-center gap-6 text-sm text-gray-400">
                 <span>Hecho con 💚 en Cali, Colombia</span>
@@ -1177,26 +1181,54 @@ export default function ChontaTokenLanding() {
       </ClientOnly>
 
       {/* Styles for animations */}
-      <style jsx>{`
+      <style jsx global>{`
         @keyframes float {
           0% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
           100% { transform: translateY(0px); }
         }
-        
         @keyframes float-delayed {
           0% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
           100% { transform: translateY(0px); }
         }
-        
+        @keyframes microalga-rotar {
+          0% { transform: rotate(0deg);}
+          100% { transform: rotate(360deg);}
+        }
+        @keyframes microalga-ondear {
+          0% { transform: rotate(10deg);}
+          100% { transform: rotate(-10deg);}
+        }
         .animate-float {
           animation: float 3s ease-in-out infinite;
         }
-        
         .animate-float-delayed {
           animation: float-delayed 3s ease-in-out infinite;
           animation-delay: 1.5s;
+        }
+        .circular-icon {
+          position: relative;
+          width: 80px;
+          height: 80px;
+          margin: 16px auto 0;
+          animation: girar 10s linear infinite;
+        }
+        .flecha {
+          position: absolute;
+          width: 28px;
+          height: 28px;
+          border: 4px solid #52b788;
+          border-radius: 50%;
+          border-right: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+        }
+        .flecha1 { top: 0; left: 26px; transform: rotate(0deg);}
+        .flecha2 { top: 26px; right: 0; transform: rotate(120deg);}
+        .flecha3 { bottom: 0; left: 26px; transform: rotate(240deg);}
+        @keyframes girar {
+          0% { transform: rotate(0deg);}
+          100% { transform: rotate(360deg);}
         }
       `}</style>
     </div>

@@ -12,12 +12,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es">
+      <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
+      </head>
       <body className={`${inter.className} antialiased`} suppressHydrationWarning>
         <Providers>
           {children}
         </Providers>
       </body>
     </html>
-  );
+  )
 }
