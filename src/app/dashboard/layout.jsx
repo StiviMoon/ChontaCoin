@@ -9,6 +9,7 @@ import { Loader2 } from 'lucide-react';
 
 export default function DashboardLayout({ children }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // ← Esta línea faltaba
   const { isConnected } = useAuthCheck(true);
   
   useEffect(() => {

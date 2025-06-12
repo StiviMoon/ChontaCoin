@@ -10,8 +10,24 @@ const useUserStore = create(
       tokens: 0,
       activities: [],
       
-      // Acciones básicas
-      setUser: (userData) => set({ user: userData }),
+      // Acciones básicas con validación para evitar loops
+      setUser: (userData) => {
+        const currentUser = get().user;
+        
+        // Evitar actualizaciones innecesarias
+        if (currentUser && 
+            currentUser.address === userData?.address && 
+            currentUser.id === userData?.id) {
+          return; // No actualizar si los datos principales son iguales
+        }
+        
+        set({ user: userData });
+      },
+      
+      // Actualizar usuario parcialmente (más seguro)
+      updateUser: (updates) => set((state) => ({
+        user: state.user ? { ...state.user, ...updates } : null
+      })),
       
       addTokens: (amount) => set((state) => ({
         tokens: state.tokens + amount
@@ -120,20 +136,29 @@ const useUserStore = create(
         activities: []
       }),
       
-      // Mock data actualizado - coincide con mockData.js
-      initRealUserData: (walletAddress, ensName = null) => set({
-        user: {
-          id: Date.now(),
-          name: ensName || `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`,
-          email: null,
-          address: walletAddress,
-          ensName: ensName,
-          joinedDate: new Date().toISOString(),
-          neighborhood: 'Yumbo, Valle del Cauca'
-        },
-        tokens: 0, // Empezar con 0 tokens reales
-        activities: [] // Sin actividades previas
-      }),
+      // Inicializar usuario con validación
+      initRealUserData: (walletAddress, ensName = null) => {
+        const currentUser = get().user;
+        
+        // Evitar reinicializar si ya existe el mismo usuario
+        if (currentUser && currentUser.address === walletAddress) {
+          return;
+        }
+        
+        set({
+          user: {
+            id: Date.now(),
+            name: ensName || `${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}`,
+            email: null,
+            address: walletAddress,
+            ensName: ensName,
+            joinedDate: new Date().toISOString(),
+            neighborhood: 'Cali, Valle del Cauca'
+          },
+          tokens: 0,
+          activities: []
+        });
+      },
 
     }),
     {
