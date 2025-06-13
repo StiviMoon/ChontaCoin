@@ -43,8 +43,19 @@ import {
   ActivityIcon,
   Gift,
   HelpCircle,
-  UserSquareIcon,
-  User,
+  Microscope,
+  Trash2,
+  GraduationCap,
+  Droplets,
+  Building2,
+  Calendar,
+  MapPinIcon,
+  UsersIcon,
+  Link as LinkIcon,
+  Blocks,
+  RefreshCw,
+  Cpu,
+  Database
 } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
@@ -56,6 +67,9 @@ export default function ChontaTokenLanding() {
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState('inicio')
   const [isMounted, setIsMounted] = useState(false)
+  const [showActivityModal, setShowActivityModal] = useState(false)
+  const [selectedActivity, setSelectedActivity] = useState(null)
+  const [showInfografia, setShowInfografia] = useState(false)
   
   const router = useRouter()
   const { isConnected, address } = useAccount()
@@ -114,12 +128,24 @@ export default function ChontaTokenLanding() {
       router.push('/dashboard/overview')
     }
   }, [isConnected, router, isMounted])
+
+  // Efecto para cerrar modal de actividad cuando se conecta wallet
+  useEffect(() => {
+    if (isConnected && showActivityModal) {
+      setShowActivityModal(false)
+      setShowInfografia(false)
+    }
+  }, [isConnected, showActivityModal])
   
   const handleConnectWallet = () => {
     if (isConnected) {
       router.push('/dashboard/overview')
     } else {
       setShowModal(true)
+    }
+    // Cerrar modal de actividad si está abierto
+    if (showActivityModal) {
+      setShowActivityModal(false)
     }
   }
 
@@ -143,25 +169,25 @@ export default function ChontaTokenLanding() {
     { 
       value: "", 
       label: "Cultivo de microalgas", 
-      icon: "/microalga1.png",
+      icon: Microscope,
       description: "Contribución al río Cauca"
     },
     { 
       value: "", 
       label: "Reducción de CO₂", 
-      icon: "/Co.png",
+      icon: Globe,
       description: "Impacto ambiental medible"
     },
     { 
       value: "", 
       label: "Participación ciudadana", 
-      icon: "/sociedad.png",
+      icon: Users,
       description: "Comunidad activa"
     },
     { 
       value: "", 
       label: "Recuperación de espacios", 
-      icon: "/cambio.png",
+      icon: TreePine,
       description: "Transformación urbana"
     }
   ]
@@ -175,6 +201,69 @@ export default function ChontaTokenLanding() {
     { id: 'Mapa', label: 'Mapa' },
     { id: 'FAQ', label: 'FAQ' }
   ]
+
+  // Datos completos de actividades con iconos Lucide
+  const activitiesData = [
+    {
+      id: 1,
+      title: "Cultivo de microalgas",
+      description: "Participa en jornadas de cultivo de microalgas para contribuir en el mantenimiento del río cauca.",
+      detailedDescription: "Las microalgas son organismos microscópicos que juegan un papel crucial en la purificación del agua y la reducción de CO₂. En estas jornadas aprenderás sobre técnicas de cultivo sostenible, el impacto ambiental positivo de las microalgas, y contribuirás directamente a la mejora de la calidad del agua del río Cauca. Cada sesión incluye capacitación técnica, trabajo práctico en laboratorio y actividades de campo.",
+      reward: "75-150 CHT",
+      color: "green",
+      difficulty: "Media",
+      time: "4 horas",
+      next: "Sábados",
+      location: "Laboratorio de Biotecnología - Universidad del Valle",
+      requirements: "No se requiere experiencia previa. Se proporcionará todo el material necesario.",
+      schedule: "8:00 AM - 12:00 PM",
+      maxParticipants: "15 personas por sesión",
+      icon: Microscope, // Icono Lucide para microalgas/laboratorio
+      iconColor: "text-green-600",
+      iconBg: "bg-green-100"
+    },
+    {
+      id: 2,
+      title: "Limpieza Comunitaria",
+      description: "Únete a la limpieza de zonas alrededor del río Cauca y parques",
+      detailedDescription: "Actividad comunitaria que busca recuperar y mantener limpios los espacios públicos de nuestra ciudad. Trabajamos en equipo para recolectar residuos, clasificar materiales reciclables y crear conciencia ambiental. Cada jornada incluye herramientas de trabajo, refrigerio y certificado de participación. Es una excelente oportunidad para conocer personas comprometidas con el medio ambiente y hacer networking verde.",
+      reward: "25-75 CHT",
+      color: "orange",
+      difficulty: "Fácil",
+      time: "3 horas",
+      next: "Domingos",
+      location: "Malecón del río Cauca - Parque de la Caña",
+      requirements: "Ropa cómoda, zapatos cerrados, protector solar. Se proporciona guantes y bolsas.",
+      schedule: "7:00 AM - 10:00 AM",
+      maxParticipants: "50 personas por jornada",
+      icon: Trash2, // Icono Lucide para limpieza
+      iconColor: "text-orange-600",
+      iconBg: "bg-orange-100"
+    },
+    {
+      id: 3,
+      title: "Educación Ambiental",
+      description: "Asiste a talleres y charlas sobre sostenibilidad y medio ambiente.",
+      detailedDescription: "Programa educativo integral que abarca temas como cambio climático, economía circular, tecnologías verdes y desarrollo sostenible. Cada sesión incluye conferencias magistrales, talleres prácticos, estudios de caso y debates grupales. Los participantes recibirán material didáctico digital, acceso a biblioteca virtual y certificado de asistencia. Ideal para estudiantes, profesionales y cualquier persona interesada en ampliar sus conocimientos ambientales.",
+      reward: "40-80 CHT",
+      color: "green",
+      difficulty: "Media",
+      time: "2 horas",
+      next: "Martes y Jueves",
+      location: "Auditorio Central - Cámara de Comercio de Cali",
+      requirements: "Cuaderno para notas, interés por aprender. Material digital incluido.",
+      schedule: "6:00 PM - 8:00 PM",
+      maxParticipants: "100 personas por sesión",
+      icon: GraduationCap, // Icono Lucide para educación
+      iconColor: "text-blue-600",
+      iconBg: "bg-blue-100"
+    }
+  ]
+
+  const handleActivityClick = (activity) => {
+    setSelectedActivity(activity)
+    setShowActivityModal(true)
+  }
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
@@ -346,23 +435,20 @@ export default function ChontaTokenLanding() {
 
               {/* Trust Indicators - Mejorados para responsive */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 pt-6 md:pt-8 border-t">
-                {stats.map((stat, index) => (
-                  <div key={index} className="flex flex-col items-center justify-center text-center p-2">
-                    <div className="flex justify-center mb-2 md:mb-3">
-                      <div className="relative w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-sm flex items-center justify-center overflow-hidden">
-                        <Image
-                          src={stat.icon}
-                          alt={stat.label}
-                          width={32}
-                          height={32}
-                          className="object-contain md:w-10 md:h-10"
-                        />
+                {stats.map((stat, index) => {
+                  const IconComponent = stat.icon
+                  return (
+                    <div key={index} className="flex flex-col items-center justify-center text-center p-2">
+                      <div className="flex justify-center mb-2 md:mb-3">
+                        <div className="relative w-10 h-10 md:w-12 md:h-12 bg-white rounded-full shadow-sm flex items-center justify-center">
+                          <IconComponent className="w-6 h-6 md:w-8 md:h-8 text-green-600" />
+                        </div>
                       </div>
+                      <p className="text-xs md:text-sm font-bold text-gray-900 leading-tight">{stat.label}</p>
+                      <p className="text-xs text-gray-600 mt-1 hidden md:block">{stat.description}</p>
                     </div>
-                    <p className="text-xs md:text-sm font-bold text-gray-900 leading-tight">{stat.label}</p>
-                    <p className="text-xs text-gray-600 mt-1 hidden md:block">{stat.description}</p>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             </div>
 
@@ -371,7 +457,7 @@ export default function ChontaTokenLanding() {
               <div className="relative mx-auto max-w-sm md:max-w-md lg:max-w-lg">
                 <Image
                   src="/Colombia.jpg"
-                  alt="Ilustración ChontaToken"
+                  alt="Ilustración Cali"
                   width={500}
                   height={300}
                   className="w-full h-auto object-contain rounded-2xl shadow-2xl"
@@ -392,7 +478,7 @@ export default function ChontaTokenLanding() {
                 <div className="absolute -bottom-2 -left-2 md:-bottom-4 md:-left-4 bg-white rounded-lg shadow-lg p-2 md:p-3 animate-float-delayed max-w-[120px] md:max-w-none">
                   <div className="flex items-center gap-1 md:gap-2">
                     <div className="w-6 h-6 md:w-8 md:h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                     <User/>
+                      <Users className="w-3 h-3 md:w-4 md:h-4 text-blue-600" />
                     </div>
                     <div>
                       <p className="text-xs text-gray-500">Participantes</p>
@@ -424,22 +510,11 @@ export default function ChontaTokenLanding() {
               <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 <CardHeader className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    {/* Microalga animada - Optimizada */}
-                    <div className="relative w-12 h-12">
-                      <div
-                        className="w-12 h-12 rounded-full border-4 border-[#168aad] bg-[#76c893] shadow-inner relative"
-                        style={{
-                          boxShadow: "inset 0 0 10px rgba(0,0,0,0.2)",
-                          animation: "microalga-rotar 12s linear infinite"
-                        }}
-                      >
-                        {/* Cloroplastos */}
-                        <div className="absolute w-3 h-2 bg-[#b5e48c] rounded-full top-2 left-2 transform rotate-12" />
-                        <div className="absolute w-3 h-2 bg-[#b5e48c] rounded-full top-3 right-1 transform rotate-45" />
-                        <div className="absolute w-3 h-2 bg-[#b5e48c] rounded-full bottom-2 left-3 transform -rotate-12" />
-                        {/* Núcleo */}
-                        <div className="absolute w-4 h-4 bg-[#52b788] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" 
-                             style={{ boxShadow: "inset 0 0 5px rgba(0,0,0,0.2)" }} />
+                    {/* Icono Blockchain/Cadena */}
+                    <div className="relative">
+                      <LinkIcon className="w-10 h-10 text-green-600 animate-pulse" />
+                      <div className="absolute -top-1 -right-1">
+                        <Leaf className="w-4 h-4 text-emerald-500" />
                       </div>
                     </div>
                   </div>
@@ -455,11 +530,10 @@ export default function ChontaTokenLanding() {
               <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 <CardHeader className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    {/* Ícono animado economía circular - Optimizado */}
-                    <div className="circular-icon" aria-label="Economía circular" role="img">
-                      <div className="flecha flecha1"></div>
-                      <div className="flecha flecha2"></div>
-                      <div className="flecha flecha3"></div>
+                    {/* Icono Economía Circular con animación */}
+                    <div className="relative">
+                      <RefreshCw className="w-10 h-10 text-blue-600 animate-spin-slow" />
+                      <Coins className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-indigo-600" />
                     </div>
                   </div>
                   <CardTitle className="text-lg md:text-xl">Economía Circular</CardTitle>
@@ -474,9 +548,14 @@ export default function ChontaTokenLanding() {
               <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 <CardHeader className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-pink-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    <div className="relative flex h-10 w-10">
-                      <div className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></div>
-                      <div className="relative inline-flex rounded-full h-10 w-10 bg-green-600"></div>
+                    {/* Icono Impacto Colectivo */}
+                    <div className="relative">
+                      <div className="relative flex h-10 w-10">
+                        <div className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></div>
+                        <div className="relative inline-flex rounded-full h-10 w-10 bg-green-600 items-center justify-center">
+                          <Users className="w-5 h-5 text-white" />
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <CardTitle className="text-lg md:text-xl">Impacto Colectivo</CardTitle>
@@ -512,13 +591,7 @@ export default function ChontaTokenLanding() {
                 </div>
                 <div className="text-center">
                   <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 bg-white rounded-full shadow-lg">
-                    <Image
-                      src="/transparencia.png"
-                      alt="100% Transparente"
-                      width={60}
-                      height={60}
-                      className="object-contain md:w-20 md:h-20"
-                    />
+                    <Shield className="w-12 h-12 md:w-16 md:h-16 text-green-600" />
                   </div>
                   <p className="mt-4 text-base md:text-lg font-semibold text-gray-900">
                     100% Transparente
@@ -622,38 +695,7 @@ export default function ChontaTokenLanding() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: "Cultivo de microalgas",
-                description: "Participa en jornadas de cultivo de microalgas para contribuir en el mantenimiento del río cauca.",
-                reward: "75-150 CHT",
-                color: "green",
-                difficulty: "Media",
-                time: "4 horas",
-                next: "Sábados",
-                customIcon: "/microalga1.png" 
-              },
-              {
-                title: "Limpieza Comunitaria",
-                description: "Únete a la limpieza de zonas alrededor del río Cauca y parques",
-                reward: "25-75 CHT",
-                color: "orange",
-                difficulty: "Fácil",
-                time: "3 horas",
-                next: "Domingos",
-                customIcon: "/limpieza comunitaria.png"
-              },
-              {
-                title: "Educación Ambiental",
-                description: "Asiste a talleres y charlas sobre sostenibilidad y medio ambiente.",
-                reward: "40-80 CHT",
-                color: "green",
-                difficulty: "Media",
-                time: "2 horas",
-                next: "Martes y Jueves",
-                customIcon: "/educacion.png"
-              },
-            ].map((activity, index) => (
+            {activitiesData.map((activity, index) => (
               <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 overflow-hidden h-full flex flex-col">
                 <div className={`h-2 bg-gradient-to-r ${
                   activity.color === 'green' ? 'from-green-400 to-emerald-500' : ''
@@ -663,17 +705,8 @@ export default function ChontaTokenLanding() {
                 
                 <CardHeader className="flex-grow">
                   <div className="flex justify-between items-start mb-4">
-                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${
-                      activity.color === 'green' ? 'bg-green-100' : 'bg-orange-100'
-                    }`}>
-                      <div className="relative w-8 h-8 md:w-10 md:h-10">
-                        <Image
-                          src={activity.customIcon}
-                          alt={activity.title}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
+                    <div className={`w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${activity.iconBg}`}>
+                      <activity.icon className={`w-6 h-6 md:w-8 md:h-8 ${activity.iconColor}`} />
                     </div>
                     <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs">
                       {activity.reward}
@@ -683,7 +716,7 @@ export default function ChontaTokenLanding() {
                   <CardDescription className="text-sm md:text-base leading-relaxed">{activity.description}</CardDescription>
                 </CardHeader>
                 
-                <CardContent className="pt-0">
+                <CardContent className="pt-0 space-y-4">
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="outline" className="text-xs">
                       <Clock className="mr-1 w-3 h-3" />
@@ -696,6 +729,17 @@ export default function ChontaTokenLanding() {
                       {activity.next}
                     </Badge>
                   </div>
+                  
+                  {/* Botón Ver Detalles */}
+                  <Button
+                    onClick={() => handleActivityClick(activity)}
+                    variant="outline"
+                    className="w-full border-green-600 text-green-600 hover:bg-green-50 transition-colors"
+                    size="sm"
+                  >
+                    <Info className="mr-2 w-4 h-4" />
+                    Ver Detalles
+                  </Button>
                 </CardContent>
               </Card>
             ))}
@@ -933,22 +977,19 @@ export default function ChontaTokenLanding() {
             
             {/* Stats - Mejorado para responsive */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-              {stats.map((stat, index) => (
-                <div key={index} className="text-center">
-                  <div className="flex justify-center mb-2">
-                    <div className="w-8 h-8 md:w-12 md:h-12">
-                      <Image
-                        src={stat.icon}
-                        alt={stat.label}
-                        width={48}
-                        height={48}
-                        className="object-contain filter brightness-0 invert"
-                      />
+              {stats.map((stat, index) => {
+                const IconComponent = stat.icon
+                return (
+                  <div key={index} className="text-center">
+                    <div className="flex justify-center mb-2">
+                      <div className="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center">
+                        <IconComponent className="w-6 h-6 md:w-8 md:h-8 text-white" />
+                      </div>
                     </div>
+                    <p className="text-xs md:text-sm text-green-100 leading-tight">{stat.label}</p>
                   </div>
-                  <p className="text-xs md:text-sm text-green-100 leading-tight">{stat.label}</p>
-                </div>
-              ))}
+                )
+              })}
             </div>
           </div>
         </div>
@@ -1076,6 +1117,324 @@ export default function ChontaTokenLanding() {
         />
       </ClientOnly>
 
+      {/* Modal de Detalles de Actividad */}
+      {showActivityModal && selectedActivity && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Header del Modal */}
+            <div className="relative">
+              <div className={`h-2 bg-gradient-to-r ${
+                selectedActivity.color === 'green' ? 'from-green-400 to-emerald-500' : 'from-orange-400 to-red-500'
+              }`}></div>
+              
+              <div className="p-6 pb-0">
+                <div className="flex justify-between items-start">
+                  <div className="flex items-center space-x-4">
+                    <div className={`w-16 h-16 rounded-xl flex items-center justify-center ${
+                      selectedActivity.color === 'green' ? 'bg-green-100' : 'bg-orange-100'
+                    }`}>
+                      <div className="relative w-12 h-12">
+                        <Image
+                          src={selectedActivity.customIcon}
+                          alt={selectedActivity.title}
+                          fill
+                          className="object-contain"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{selectedActivity.title}</h2>
+                      <div className="flex items-center gap-2 mt-2">
+                        <Badge variant="secondary" className="bg-green-100 text-green-800">
+                          {selectedActivity.reward}
+                        </Badge>
+                        <Badge variant="outline" className="text-xs">
+                          {selectedActivity.difficulty}
+                        </Badge>
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowActivityModal(false)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <X className="w-6 h-6 text-gray-500" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Contenido del Modal */}
+            <div className="p-6 space-y-6">
+              {/* Imagen Principal o Infografía */}
+              {showInfografia ? (
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-semibold text-gray-900">Infografía Informativa</h3>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setShowInfografia(false)}
+                      className="border-gray-300"
+                    >
+                      <ArrowRight className="w-4 h-4 mr-1 transform rotate-180" />
+                      Volver
+                    </Button>
+                  </div>
+                  
+                  {/* Contenedor de Infografía */}
+                  <div className="relative bg-white rounded-xl border-2 border-gray-100 overflow-hidden">
+                    <div className="aspect-[3/4] relative bg-gradient-to-br from-green-50 to-blue-50">
+                      {/* Placeholder para la infografía */}
+                      <div className="absolute inset-0 flex flex-col items-center justify-center p-8">
+                        <div className="text-center space-y-6 max-w-md">
+                          <div className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center ${selectedActivity.iconBg}`}>
+                            <selectedActivity.icon className={`w-12 h-12 ${selectedActivity.iconColor}`} />
+                          </div>
+                          
+                          <div>
+                            <h4 className="text-2xl font-bold text-gray-800 mb-2">
+                              {selectedActivity.title}
+                            </h4>
+                            <p className="text-gray-600 mb-4">Guía Visual Completa</p>
+                          </div>
+                          
+                          {/* Elementos informativos de la infografía */}
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div className="bg-white/80 rounded-lg p-3 text-center">
+                              <Clock className="w-6 h-6 mx-auto mb-1 text-green-600" />
+                              <p className="font-medium">{selectedActivity.time}</p>
+                              <p className="text-gray-600 text-xs">Duración</p>
+                            </div>
+                            <div className="bg-white/80 rounded-lg p-3 text-center">
+                              <Users className="w-6 h-6 mx-auto mb-1 text-blue-600" />
+                              <p className="font-medium">{selectedActivity.maxParticipants.split(' ')[0]}</p>
+                              <p className="text-gray-600 text-xs">Participantes</p>
+                            </div>
+                            <div className="bg-white/80 rounded-lg p-3 text-center">
+                              <Target className="w-6 h-6 mx-auto mb-1 text-orange-600" />
+                              <p className="font-medium">{selectedActivity.difficulty}</p>
+                              <p className="text-gray-600 text-xs">Dificultad</p>
+                            </div>
+                            <div className="bg-white/80 rounded-lg p-3 text-center">
+                              <Coins className="w-6 h-6 mx-auto mb-1 text-yellow-600" />
+                              <p className="font-medium">{selectedActivity.reward}</p>
+                              <p className="text-gray-600 text-xs">Recompensa</p>
+                            </div>
+                          </div>
+                          
+                          {/* Pasos o información clave */}
+                          <div className="bg-white/90 rounded-lg p-4 text-left">
+                            <h5 className="font-semibold text-gray-800 mb-2">Pasos Principales:</h5>
+                            <ul className="space-y-1 text-sm text-gray-700">
+                              <li className="flex items-center gap-2">
+                                <div className="w-4 h-4 rounded-full bg-green-500 text-white text-xs flex items-center justify-center font-bold">1</div>
+                                Registro y preparación
+                              </li>
+                              <li className="flex items-center gap-2">
+                                <div className="w-4 h-4 rounded-full bg-green-500 text-white text-xs flex items-center justify-center font-bold">2</div>
+                                Participación activa
+                              </li>
+                              <li className="flex items-center gap-2">
+                                <div className="w-4 h-4 rounded-full bg-green-500 text-white text-xs flex items-center justify-center font-bold">3</div>
+                                Verificación y tokens
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        
+                        {/* Decoraciones */}
+                        <div className="absolute top-4 right-4 opacity-20">
+                          <Sparkles className="w-8 h-8 text-green-600" />
+                        </div>
+                        <div className="absolute bottom-4 left-4 opacity-20">
+                          <Heart className="w-6 h-6 text-orange-600" />
+                        </div>
+                        <div className="absolute top-1/2 left-4 opacity-10">
+                          <TreePine className="w-12 h-12 text-green-600" />
+                        </div>
+                        <div className="absolute top-1/3 right-4 opacity-10">
+                          <Globe className="w-10 h-10 text-blue-600" />
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Footer de la infografía */}
+                    <div className="bg-gray-50 px-6 py-3 border-t">
+                      <p className="text-xs text-gray-600 text-center">
+                        📍 {selectedActivity.location} • 📅 {selectedActivity.next} • ⏰ {selectedActivity.schedule}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Botón de descarga (opcional) */}
+                  <div className="text-center">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-green-600 text-green-600 hover:bg-green-50"
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Descargar PDF
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  {/* Vista Normal - Imagen Principal */}
+                  <div className="relative h-64 md:h-80 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl overflow-hidden">
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-center space-y-4">
+                        <div className={`w-24 h-24 mx-auto rounded-full flex items-center justify-center ${
+                          selectedActivity.color === 'green' ? 'bg-green-100' : 'bg-orange-100'
+                        }`}>
+                          <div className="relative w-16 h-16">
+                            <Image
+                              src={selectedActivity.customIcon}
+                              alt={selectedActivity.title}
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold text-gray-800">Imagen Representativa</h3>
+                          <p className="text-gray-600">Actividad: {selectedActivity.title}</p>
+                        </div>
+                      </div>
+                      
+                      {/* Decoración */}
+                      <div className="absolute top-4 right-4 opacity-20">
+                        <Sparkles className="w-8 h-8 text-green-600" />
+                      </div>
+                      <div className="absolute bottom-4 left-4 opacity-20">
+                        <Heart className="w-6 h-6 text-orange-600" />
+                      </div>
+                    </div>
+                    
+                    {/* Botón Ver Infografía sobrepuesto */}
+                    <div className="absolute bottom-4 right-4">
+                      <Button
+                        onClick={() => setShowInfografia(true)}
+                        size="sm"
+                        className="bg-white/90 hover:bg-white text-gray-700 border border-gray-200 shadow-lg"
+                      >
+                        <BarChart3 className="w-4 h-4 mr-2" />
+                        Ver Infografía
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Información Detallada */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Descripción</h3>
+                        <p className="text-gray-600 leading-relaxed">{selectedActivity.detailedDescription}</p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Detalles de la Actividad</h3>
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-3">
+                            <Clock className="w-5 h-5 text-gray-400" />
+                            <div>
+                              <span className="font-medium">Horario:</span>
+                              <span className="text-gray-600 ml-2">{selectedActivity.schedule}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <MapPin className="w-5 h-5 text-gray-400" />
+                            <div>
+                              <span className="font-medium">Ubicación:</span>
+                              <span className="text-gray-600 ml-2">{selectedActivity.location}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <Users className="w-5 h-5 text-gray-400" />
+                            <div>
+                              <span className="font-medium">Participantes:</span>
+                              <span className="text-gray-600 ml-2">{selectedActivity.maxParticipants}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">Requisitos</h3>
+                        <p className="text-gray-600">{selectedActivity.requirements}</p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Información Adicional</h3>
+                        <div className="bg-gray-50 rounded-lg p-4 space-y-2">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Próxima sesión:</span>
+                            <span className="font-medium text-gray-900">{selectedActivity.next}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Duración:</span>
+                            <span className="font-medium text-gray-900">{selectedActivity.time}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">Dificultad:</span>
+                            <span className="font-medium text-gray-900">{selectedActivity.difficulty}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-gray-600">Recompensa:</span>
+                            <Badge className="bg-green-100 text-green-800 font-bold">
+                              {selectedActivity.reward}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* Botones de Acción */}
+              {!showInfografia && (
+                <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+                  <Button
+                    onClick={handleConnectWallet}
+                    className={`flex-1 ${
+                      selectedActivity.color === 'green' 
+                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700' 
+                        : 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700'
+                    } text-white shadow-lg cursor-pointer`}
+                    size="lg"
+                  >
+                    <Wallet className="mr-2 w-5 h-5" />
+                    {isConnected ? 'Inscribirse Ahora' : 'Conectar Wallet para Participar'}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowActivityModal(false)}
+                    className="sm:w-auto px-6"
+                    size="lg"
+                  >
+                    Cerrar
+                  </Button>
+                </div>
+              )}
+
+              {/* Footer del Modal */}
+              {!showInfografia && (
+                <div className="bg-green-50 rounded-lg p-4 text-center">
+                  <p className="text-sm text-green-700">
+                    <Shield className="inline w-4 h-4 mr-1" />
+                    Todas las actividades están verificadas y son 100% seguras
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Styles for animations - Optimizados */}
       <style jsx global>{`
         @keyframes float {
@@ -1086,11 +1445,7 @@ export default function ChontaTokenLanding() {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
         }
-        @keyframes microalga-rotar {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        @keyframes girar {
+        @keyframes spin-slow {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
@@ -1102,50 +1457,14 @@ export default function ChontaTokenLanding() {
           animation: float-delayed 3s ease-in-out infinite;
           animation-delay: 1.5s;
         }
-        
-        .circular-icon {
-          position: relative;
-          width: 48px;
-          height: 48px;
-          animation: girar 10s linear infinite;
-        }
-        
-        .flecha {
-          position: absolute;
-          width: 20px;
-          height: 20px;
-          border: 3px solid #52b788;
-          border-radius: 50%;
-          border-right: 3px solid transparent;
-          border-bottom: 3px solid transparent;
-        }
-        
-        .flecha1 { 
-          top: 0; 
-          left: 50%; 
-          transform: translateX(-50%) rotate(0deg);
-        }
-        .flecha2 { 
-          top: 50%; 
-          right: 0; 
-          transform: translateY(-50%) rotate(120deg);
-        }
-        .flecha3 { 
-          bottom: 0; 
-          left: 50%; 
-          transform: translateX(-50%) rotate(240deg);
+        .animate-spin-slow {
+          animation: spin-slow 3s linear infinite;
         }
         
         /* Responsive adjustments */
         @media (max-width: 640px) {
-          .circular-icon {
-            width: 40px;
-            height: 40px;
-          }
-          .flecha {
-            width: 16px;
-            height: 16px;
-            border-width: 2px;
+          .animate-spin-slow {
+            animation: spin-slow 4s linear infinite;
           }
         }
       `}</style>
