@@ -33,7 +33,7 @@ const menuItems = [
   { 
     name: 'Escáner QR', 
     icon: QrCode, 
-    path: '/scanner' 
+    path: '/dashboard/user' 
   },
   { 
     name: 'Mis Tokens', 
