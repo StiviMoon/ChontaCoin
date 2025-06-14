@@ -1,3 +1,4 @@
+// /components/QRScannerIntegrated.jsx (Versión integrada con useActivities)
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -12,13 +13,14 @@ import {
   User, 
   MapPin, 
   Calendar,
-  Clock,
   Loader2,
   Trophy,
-  Smartphone
+  Smartphone,
+  TrendingUp
 } from 'lucide-react';
+import { useActivities } from '@/hooks/useActivities';
 
-// Datos simulados de códigos QR válidos (normalmente vendrían del backend)
+// Datos simulados de códigos QR válidos
 const validQRCodes = {
   'CHT124567890': {
     activityId: 1,
@@ -28,7 +30,7 @@ const validQRCodes = {
     location: 'Riberas del Río Cali - Sector Malecón',
     date: '2025-01-25',
     organizer: 'CVC Valle del Cauca',
-    expiresAt: Date.now() + (24 * 60 * 60 * 1000), // 24 horas desde ahora
+    expiresAt: Date.now() + (24 * 60 * 60 * 1000),
     isValid: true
   },
   'CHT298765432': {
@@ -39,7 +41,7 @@ const validQRCodes = {
     location: 'I.E. Técnico Industrial - Sede Norte',
     date: '2025-01-28',
     organizer: 'Secretaría de Educación de Cali',
-    expiresAt: Date.now() + (48 * 60 * 60 * 1000), // 48 horas desde ahora
+    expiresAt: Date.now() + (48 * 60 * 60 * 1000),
     isValid: true
   },
   'CHT387654321': {
@@ -50,103 +52,53 @@ const validQRCodes = {
     location: 'Cerros Orientales - Zona de Reforestación',
     date: '2025-02-02',
     organizer: 'DAGMA - Cali',
-    expiresAt: Date.now() + (72 * 60 * 60 * 1000), // 72 horas desde ahora
+    expiresAt: Date.now() + (72 * 60 * 60 * 1000),
     isValid: true
   }
 };
 
-// Simulación de usuario actual (normalmente vendría del contexto/store)
-const getCurrentUser = () => {
-  const stored = localStorage.getItem('chonta-user-storage');
-  if (stored) {
-    try {
-      const parsed = JSON.parse(stored);
-      return parsed.state || parsed; // Manejar diferentes formatos de zustand
-    } catch (e) {
-      console.warn('Error parsing stored user:', e);
-    }
-  }
-  
-  // Usuario por defecto si no hay datos
-  return {
-    user: {
-      id: 1,
-      name: 'Usuario Demo',
-      address: '0x1234567890abcdef1234567890abcdef12345678',
-      neighborhood: 'Yumbo, Valle del Cauca'
-    },
-    tokens: 50,
-    activities: []
-  };
-};
+export default function QRScannerIntegrated() {
+  const {
+    user,
+    isLoading,
+    error,
+    validateQRAndComplete,
+    getUserStats,
+    clearError
+  } = useActivities();
 
-// Función para actualizar el localStorage
-const updateUserStorage = (newData) => {
-  try {
-    const current = getCurrentUser();
-    const updated = {
-      ...current,
-      ...newData,
-      user: {
-        ...current.user,
-        ...newData.user
-      }
-    };
-    
-    // Formato compatible con zustand-persist
-    const toStore = {
-      state: updated,
-      version: 1
-    };
-    
-    localStorage.setItem('chonta-user-storage', JSON.stringify(toStore));
-    return updated;
-  } catch (e) {
-    console.error('Error updating user storage:', e);
-    return null;
-  }
-};
-
-export default function QRScannerSimulator() {
-  const [currentUser, setCurrentUser] = useState(getCurrentUser());
-  const [scanMode, setScanMode] = useState('camera'); // 'camera' o 'manual'
+  const [scanMode, setScanMode] = useState('camera');
   const [manualCode, setManualCode] = useState('');
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState(null);
-  const [isValidating, setIsValidating] = useState(false);
+  const [userStats, setUserStats] = useState(null);
 
-  // Actualizar usuario cuando cambie el localStorage
+  // Actualizar estadísticas del usuario
   useEffect(() => {
-    const handleStorageChange = () => {
-      setCurrentUser(getCurrentUser());
-    };
-    
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
+    setUserStats(getUserStats());
+  }, [getUserStats]);
 
-  // Simular escaneo de cámara con códigos aleatorios
+  // Simular escaneo de cámara
   const simulateCameraScan = async () => {
     setIsScanning(true);
     setScanResult(null);
+    clearError();
     
-    // Simular tiempo de escaneo
     await new Promise(resolve => setTimeout(resolve, 3000));
     
-    // Seleccionar código aleatorio válido
     const codes = Object.keys(validQRCodes);
     const randomCode = codes[Math.floor(Math.random() * codes.length)];
     
     setIsScanning(false);
-    validateQRCode(randomCode);
+    await validateQRCode(randomCode);
   };
 
-  // Validar código QR
+  // Validar código QR usando el hook integrado
   const validateQRCode = async (code) => {
-    setIsValidating(true);
     setScanResult(null);
+    clearError();
 
-    // Simular validación en el servidor
+    // Simular validación inicial
     await new Promise(resolve => setTimeout(resolve, 2000));
 
     const qrData = validQRCodes[code];
@@ -157,7 +109,6 @@ export default function QRScannerSimulator() {
         error: 'Código QR no válido o no reconocido',
         code: code
       });
-      setIsValidating(false);
       return;
     }
 
@@ -169,76 +120,41 @@ export default function QRScannerSimulator() {
         code: code,
         expired: true
       });
-      setIsValidating(false);
       return;
     }
 
-    // Verificar si ya completó esta actividad
-    const alreadyCompleted = currentUser.activities?.some(
-      a => a.id === qrData.activityId && a.completed
-    );
-
-    if (alreadyCompleted) {
-      setScanResult({
-        success: false,
-        error: 'Ya has completado esta actividad anteriormente',
-        code: code,
-        activityData: qrData
-      });
-      setIsValidating(false);
-      return;
-    }
-
-    // Validación exitosa - Procesar recompensa
     try {
-      const newTokens = currentUser.tokens + qrData.tokensReward;
-      const newActivity = {
-        id: qrData.activityId,
-        name: qrData.activityName,
-        completed: true,
-        completedAt: new Date().toISOString(),
-        tokensEarned: qrData.tokensReward,
-        location: qrData.location,
-        organizer: qrData.organizer
-      };
-
-      // Actualizar localStorage
-      const updatedUser = updateUserStorage({
-        tokens: newTokens,
-        activities: [
-          ...(currentUser.activities || []).filter(a => a.id !== qrData.activityId),
-          newActivity
-        ]
-      });
-
-      if (updatedUser) {
-        setCurrentUser(updatedUser);
-        
+      // Usar el hook integrado para validar y completar
+      const result = await validateQRAndComplete(code, qrData);
+      
+      if (result.success) {
         setScanResult({
           success: true,
           message: '¡Validación exitosa! Tus ChontaTokens se han enviado a tu wallet',
-          tokensEarned: qrData.tokensReward,
-          newBalance: newTokens,
+          tokensEarned: result.tokensEarned,
+          newBalance: userStats?.currentTokens + result.tokensEarned,
           activityData: qrData,
           code: code
         });
+        
+        // Actualizar estadísticas
+        setUserStats(getUserStats());
       } else {
-        throw new Error('Error actualizando datos');
+        throw new Error(result.message || 'Error en la validación');
       }
-    } catch (error) {
+    } catch (err) {
       setScanResult({
         success: false,
-        error: 'Error procesando la recompensa. Intenta nuevamente.',
-        code: code
+        error: err.message,
+        code: code,
+        activityData: qrData
       });
     }
-
-    setIsValidating(false);
   };
 
-  const handleManualScan = () => {
+  const handleManualScan = async () => {
     if (manualCode.trim()) {
-      validateQRCode(manualCode.trim());
+      await validateQRCode(manualCode.trim());
       setManualCode('');
     }
   };
@@ -246,6 +162,7 @@ export default function QRScannerSimulator() {
   const resetScan = () => {
     setScanResult(null);
     setManualCode('');
+    clearError();
   };
 
   const formatDate = (dateString) => {
@@ -259,7 +176,7 @@ export default function QRScannerSimulator() {
 
   return (
     <div className="max-w-md mx-auto space-y-6">
-      {/* Header del usuario */}
+      {/* Header del usuario con estadísticas */}
       <Card className="bg-gradient-to-r from-blue-500 to-green-500 text-white">
         <CardContent className="p-4">
           <div className="flex items-center justify-between">
@@ -268,18 +185,40 @@ export default function QRScannerSimulator() {
                 <User className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="font-semibold">{currentUser.user?.name || 'Usuario'}</h3>
-                <p className="text-sm opacity-90">{currentUser.user?.neighborhood}</p>
+                <h3 className="font-semibold">{user?.name || 'Usuario'}</h3>
+                <p className="text-sm opacity-90">{user?.neighborhood}</p>
               </div>
             </div>
             <div className="text-right">
               <div className="flex items-center gap-1">
                 <Coins className="h-5 w-5" />
-                <span className="text-2xl font-bold">{currentUser.tokens || 0}</span>
+                <span className="text-2xl font-bold">{userStats?.currentTokens || 0}</span>
               </div>
               <p className="text-xs opacity-90">CHT Tokens</p>
             </div>
           </div>
+          
+          {/* Estadísticas adicionales */}
+          {userStats && (
+            <div className="mt-4 pt-4 border-t border-white/20">
+              <div className="grid grid-cols-2 gap-4 text-center">
+                <div>
+                  <div className="flex items-center justify-center gap-1">
+                    <Trophy className="h-4 w-4" />
+                    <span className="font-bold">{userStats.completedActivities}</span>
+                  </div>
+                  <p className="text-xs opacity-75">Completadas</p>
+                </div>
+                <div>
+                  <div className="flex items-center justify-center gap-1">
+                    <TrendingUp className="h-4 w-4" />
+                    <span className="font-bold">{userStats.totalTokensEarned}</span>
+                  </div>
+                  <p className="text-xs opacity-75">Tokens ganados</p>
+                </div>
+              </div>
+            </div>
+          )}
         </CardContent>
       </Card>
 
@@ -299,6 +238,7 @@ export default function QRScannerSimulator() {
               variant={scanMode === 'camera' ? 'default' : 'outline'}
               onClick={() => setScanMode('camera')}
               className="flex-1"
+              disabled={isLoading}
             >
               <Camera className="h-4 w-4 mr-2" />
               Cámara
@@ -307,6 +247,7 @@ export default function QRScannerSimulator() {
               variant={scanMode === 'manual' ? 'default' : 'outline'}
               onClick={() => setScanMode('manual')}
               className="flex-1"
+              disabled={isLoading}
             >
               <Smartphone className="h-4 w-4 mr-2" />
               Manual
@@ -332,7 +273,7 @@ export default function QRScannerSimulator() {
               
               <Button 
                 onClick={simulateCameraScan}
-                disabled={isScanning || isValidating}
+                disabled={isScanning || isLoading}
                 className="w-full"
               >
                 {isScanning ? 'Escaneando...' : 'Simular Escaneo'}
@@ -353,15 +294,16 @@ export default function QRScannerSimulator() {
                   value={manualCode}
                   onChange={(e) => setManualCode(e.target.value)}
                   className="mt-1"
+                  disabled={isLoading}
                 />
               </div>
               
               <Button 
                 onClick={handleManualScan}
-                disabled={!manualCode.trim() || isValidating}
+                disabled={!manualCode.trim() || isLoading}
                 className="w-full"
               >
-                {isValidating ? (
+                {isLoading ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                     Validando...
@@ -370,6 +312,13 @@ export default function QRScannerSimulator() {
                   'Validar Código'
                 )}
               </Button>
+            </div>
+          )}
+
+          {/* Error general */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+              <p className="text-red-700 text-sm">{error}</p>
             </div>
           )}
         </CardContent>
