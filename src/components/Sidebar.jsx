@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useDisconnect } from 'wagmi';
 import useUserStore from '@/lib/userStore';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Home, 
   Activity, 
@@ -13,7 +13,9 @@ import {
   User,
   LogOut,
   Loader2,
-  X 
+  X,
+  QrCode,
+  TrendingUp
 } from 'lucide-react';
 
 const menuItems = [
@@ -26,6 +28,11 @@ const menuItems = [
     name: 'Actividades', 
     icon: Activity, 
     path: '/dashboard/actividades' 
+  },
+  { 
+    name: 'Escáner QR', 
+    icon: QrCode, 
+    path: '/scanner' 
   },
   { 
     name: 'Mis Tokens', 
@@ -46,6 +53,10 @@ const menuItems = [
     name: 'Admin', 
     icon: User, 
     path: '/dashboard/admin' 
+  },{ 
+    name: 'User', 
+    icon: User, 
+    path: '/dashboard/user' 
   },
 ];
 
@@ -53,8 +64,58 @@ export default function Sidebar({ isOpen, onClose }) {
   const pathname = usePathname();
   const router = useRouter();
   const { disconnect } = useDisconnect();
-  const clearUser = useUserStore((state) => state.clearUser);
+  const { user, tokens, clearUser } = useUserStore();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const [currentTokens, setCurrentTokens] = useState(tokens || 0);
+
+  // Efecto para actualizar tokens cuando cambien en el store
+  useEffect(() => {
+    setCurrentTokens(tokens || 0);
+  }, [tokens]);
+
+  // Efecto para escuchar cambios en localStorage
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === 'chonta-user-storage' || e.storageArea === localStorage) {
+        try {
+          const stored = localStorage.getItem('chonta-user-storage');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            const userData = parsed.state || parsed;
+            if (userData.tokens !== undefined) {
+              setCurrentTokens(userData.tokens);
+            }
+          }
+        } catch (error) {
+          console.warn('Error parsing storage in sidebar:', error);
+        }
+      }
+    };
+
+    // Escuchar cambios de storage de otras pestañas
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Polling para cambios en la misma pestaña (fallback)
+    const interval = setInterval(() => {
+      try {
+        const stored = localStorage.getItem('chonta-user-storage');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          const userData = parsed.state || parsed;
+          if (userData.tokens !== undefined && userData.tokens !== currentTokens) {
+            setCurrentTokens(userData.tokens);
+          }
+        }
+      } catch (error) {
+        // Silently handle errors
+      }
+    }, 1000); // Check every second
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, [currentTokens]);
   
   const handleLogout = async () => {
     setIsLoggingOut(true);
@@ -76,6 +137,12 @@ export default function Sidebar({ isOpen, onClose }) {
     if (onClose) {
       onClose();
     }
+  };
+
+  const getTokenBadgeColor = () => {
+    if (currentTokens >= 100) return 'bg-gold-500 text-yellow-900';
+    if (currentTokens >= 50) return 'bg-green-500 text-green-900';
+    return 'bg-blue-500 text-blue-900';
   };
   
   return (
@@ -108,6 +175,28 @@ export default function Sidebar({ isOpen, onClose }) {
               <X className="h-5 w-5 text-gray-600" />
             </button>
           </div>
+
+          {/* Token Balance Card en Sidebar */}
+          <div className="p-4 border-b border-gray-100">
+            <div className="bg-gradient-to-r from-green-500 to-blue-500 rounded-lg p-4 text-white">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm opacity-90">Mi Balance</p>
+                  <div className="flex items-center gap-2">
+                    <Coins className="h-5 w-5" />
+                    <span className="text-2xl font-bold">{currentTokens}</span>
+                  </div>
+                  <p className="text-xs opacity-75">CHT Tokens</p>
+                </div>
+                <div className="text-right opacity-80">
+                  <TrendingUp className="h-6 w-6 mb-1" />
+                  <p className="text-xs">
+                    {user?.completedActivities || 0} actividades
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
           
           {/* Navigation */}
           <nav className="flex-1 space-y-1 px-3 py-4">
@@ -128,10 +217,33 @@ export default function Sidebar({ isOpen, onClose }) {
                 >
                   <Icon className="h-5 w-5 flex-shrink-0" />
                   {item.name}
+                  {/* Badge especial para Escáner QR */}
+                  {item.path === '/scanner' && (
+                    <span className="ml-auto bg-green-100 text-green-600 text-xs px-2 py-0.5 rounded-full">
+                      Nuevo
+                    </span>
+                  )}
                 </Link>
               );
             })}
           </nav>
+          
+          {/* User Info */}
+          <div className="p-4 border-t border-gray-100">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center">
+                <User className="h-4 w-4 text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-gray-900 truncate">
+                  {user?.name || 'Usuario'}
+                </p>
+                <p className="text-xs text-gray-500 truncate">
+                  {user?.neighborhood || 'Ubicación no disponible'}
+                </p>
+              </div>
+            </div>
+          </div>
           
           {/* Logout */}
           <div className="p-3">

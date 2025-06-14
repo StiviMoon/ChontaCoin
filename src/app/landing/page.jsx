@@ -279,11 +279,11 @@ export default function ChontaTokenLanding() {
             <div className="flex items-center space-x-2 flex-shrink-0">
               <div className="relative">
                 <Image
-                  src="/recurso 2logo.png"
+                  src="/Logo.png"
                   alt="Logo ChontaToken"
                   width={140}
-                  height={44}
-                  className="object-contain md:w-[180px] md:h-[56px]"
+                  height={50}
+                  className="object-contain md:w-[180px] md:h-[75px]"
                   priority
                 />
               </div>
