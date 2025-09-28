@@ -4,12 +4,12 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useDisconnect } from 'wagmi';
 import useUserStore from '@/lib/userStore';
 import { useState, useEffect } from 'react';
-import { 
-  Home, 
-  Activity, 
-  Coins, 
-  Gift, 
-  Map, 
+import {
+  Home,
+  Activity,
+  Coins,
+  Gift,
+  Map,
   User,
   LogOut,
   Loader2,
@@ -20,46 +20,27 @@ import {
 } from 'lucide-react';
 
 const menuItems = [
-  { 
-    name: 'Resumen', 
-    icon: Home, 
-    path: '/dashboard/overview' 
+  {
+    name: 'Resumen',
+    icon: Home,
+    path: '/dashboard/overview'
   },
-  { 
-    name: 'Actividades', 
-    icon: Activity, 
-    path: '/dashboard/actividades' 
+  {
+    name: 'Actividades',
+    icon: Activity,
+    path: '/dashboard/actividades'
   },
-  { 
-    name: 'Escáner QR', 
-    icon: QrCode, 
-    path: '/dashboard/user' 
+  {
+    name: 'Escáner QR',
+    icon: QrCode,
+    path: '/dashboard/user'
   },
-  { 
-    name: 'Mis Tokens', 
-    icon: Coins, 
-    path: '/dashboard/mis-tokens' 
+  {
+    name: 'Admin',
+    icon: User,
+    path: '/dashboard/admin'
   },
-  { 
-    name: 'Recompensas', 
-    icon: Gift, 
-    path: '/dashboard/recompensas' 
-  },
-  { 
-    name: 'Mapa', 
-    icon: Map, 
-    path: '/dashboard/mapa' 
-  },
-  { 
-    name: 'Admin', 
-    icon: User, 
-    path: '/dashboard/admin' 
-  },
-  { 
-    name: 'User', 
-    icon: User, 
-    path: '/dashboard/user' 
-  },
+
 ];
 
 export default function Sidebar({ isOpen, onClose }) {
@@ -133,7 +114,7 @@ export default function Sidebar({ isOpen, onClose }) {
 
     window.addEventListener('storage', handleStorageChange);
     window.addEventListener('chonta-tokens-updated', handleTokenUpdate);
-    
+
     // Polling más frecuente para sincronización
     const interval = setInterval(checkTokenUpdates, 500);
 
@@ -143,7 +124,7 @@ export default function Sidebar({ isOpen, onClose }) {
       clearInterval(interval);
     };
   }, [currentTokens]);
-  
+
   const handleLogout = async () => {
     setIsLoggingOut(true);
     try {
@@ -177,17 +158,17 @@ export default function Sidebar({ isOpen, onClose }) {
   };
 
   const stats = getActivityStats();
-  
+
   return (
     <>
       {/* Overlay para móvil */}
       {isOpen && (
-        <div 
+        <div
           className="lg:hidden fixed inset-0 z-40 bg-black bg-opacity-50 transition-opacity duration-300"
           onClick={onClose}
         />
       )}
-      
+
       {/* Sidebar */}
       <aside className={`
         fixed left-0 top-0 z-50 h-screen w-64 bg-white border-r border-gray-200 shadow-xl lg:shadow-none
@@ -203,9 +184,9 @@ export default function Sidebar({ isOpen, onClose }) {
               <div className="relative">
                 {/* Logo principal para desktop */}
                 <div className="hidden sm:block w-24 h-10 lg:w-28 lg:h-12 xl:w-32 xl:h-14">
-                  <img 
-                    src="/Logo.png" 
-                    alt="ChontaCoin Logo" 
+                  <img
+                    src="/Logo.png"
+                    alt="ChontaCoin Logo"
                     className="w-full h-full object-contain"
                     onError={(e) => {
                       // Fallback si la imagen no carga
@@ -221,9 +202,9 @@ export default function Sidebar({ isOpen, onClose }) {
 
                 {/* Logo compacto para móviles */}
                 <div className="sm:hidden w-20 h-8">
-                  <img 
-                    src="/Logo.png" 
-                    alt="ChontaCoin" 
+                  <img
+                    src="/Logo.png"
+                    alt="ChontaCoin"
                     className="w-full h-full object-contain"
                     onError={(e) => {
                       e.target.style.display = 'none';
@@ -237,7 +218,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 </div>
               </div>
             </div>
-            
+
             {/* Botón de cierre - Solo visible en móvil */}
             <button
               onClick={onClose}
@@ -293,13 +274,13 @@ export default function Sidebar({ isOpen, onClose }) {
               )}
             </div>
           </div>
-          
+
           {/* Navigation responsiva */}
           <nav className="flex-1 space-y-1 px-2 lg:px-3 py-3 lg:py-4 overflow-y-auto">
             {menuItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.path;
-              
+
               return (
                 <Link
                   key={item.path}
@@ -313,7 +294,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 >
                   <Icon className="h-5 w-5 flex-shrink-0" />
                   <span className="truncate">{item.name}</span>
-                  
+
                   {/* Badge especial para Escáner QR */}
                   {item.path === '/scanner' && (
                     <span className="ml-auto bg-green-100 text-green-600 text-xs px-2 py-0.5 rounded-full flex-shrink-0">
@@ -324,7 +305,7 @@ export default function Sidebar({ isOpen, onClose }) {
               );
             })}
           </nav>
-          
+
           {/* User Info responsiva */}
           <div className="p-3 lg:p-4 border-t border-gray-100">
             <div className="flex items-center gap-3 mb-3">
@@ -340,7 +321,7 @@ export default function Sidebar({ isOpen, onClose }) {
                 </p>
               </div>
             </div>
-            
+
             {/* Información adicional en móvil */}
             <div className="lg:hidden mb-3">
               <div className="text-xs text-gray-500 space-y-1">
@@ -357,10 +338,10 @@ export default function Sidebar({ isOpen, onClose }) {
               </div>
             </div>
           </div>
-          
+
           {/* Logout responsivo */}
           <div className="p-3 lg:p-4">
-            <button 
+            <button
               onClick={handleLogout}
               disabled={isLoggingOut}
               className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 transition-all disabled:opacity-50 disabled:cursor-not-allowed"

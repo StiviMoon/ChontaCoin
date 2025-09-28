@@ -70,13 +70,13 @@ export default function ChontaTokenLanding() {
   const [showActivityModal, setShowActivityModal] = useState(false)
   const [selectedActivity, setSelectedActivity] = useState(null)
   const [showInfografia, setShowInfografia] = useState(false)
-  
+
   const router = useRouter()
   const { isConnected, address } = useAccount()
-  
+
   useEffect(() => {
     setIsMounted(true)
-    
+
     // Limpiar estado si no hay wallet conectada
     if (!isConnected && typeof window !== 'undefined') {
       const storage = window.localStorage.getItem('chonta-user-storage')
@@ -99,11 +99,11 @@ export default function ChontaTokenLanding() {
         }
       }
     }
-    
+
     // Manejar scroll para navbar
     const handleScroll = () => {
       setScrolled(window.scrollY > 20)
-      
+
       // Detectar sección activa
       const sections = ['Inicio', 'que-es', 'como-funciona', 'Actividades', 'Recompensas', 'Mapa', 'FAQ']
       for (const section of sections) {
@@ -117,11 +117,11 @@ export default function ChontaTokenLanding() {
         }
       }
     }
-    
+
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isConnected])
-  
+
   useEffect(() => {
     // Redirigir si ya está conectado
     if (isMounted && isConnected) {
@@ -136,7 +136,7 @@ export default function ChontaTokenLanding() {
       setShowInfografia(false)
     }
   }, [isConnected, showActivityModal])
-  
+
   const handleConnectWallet = () => {
     if (isConnected) {
       router.push('/dashboard/overview')
@@ -155,7 +155,7 @@ export default function ChontaTokenLanding() {
       const offset = 80 // Altura del navbar
       const elementPosition = element.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - offset
-      
+
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth"
@@ -166,27 +166,27 @@ export default function ChontaTokenLanding() {
 
   // Estadísticas animadas con iconos mejorados
   const stats = [
-    { 
-      value: "", 
-      label: "Cultivo de microalgas", 
+    {
+      value: "",
+      label: "Cultivo de microalgas",
       icon: Microscope,
       description: "Contribución al río Cauca"
     },
-    { 
-      value: "", 
-      label: "Reducción de CO₂", 
+    {
+      value: "",
+      label: "Reducción de CO₂",
       icon: Globe,
       description: "Impacto ambiental medible"
     },
-    { 
-      value: "", 
-      label: "Participación ciudadana", 
+    {
+      value: "",
+      label: "Participación ciudadana",
       icon: Users,
       description: "Comunidad activa"
     },
-    { 
-      value: "", 
-      label: "Recuperación de espacios", 
+    {
+      value: "",
+      label: "Recuperación de espacios",
       icon: TreePine,
       description: "Transformación urbana"
     }
@@ -269,9 +269,9 @@ export default function ChontaTokenLanding() {
     <div className="min-h-screen bg-white overflow-x-hidden">
       {/* Navbar Mejorado */}
       <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white/95 backdrop-blur-lg shadow-lg' 
-          : 'bg-transparent'
+        scrolled
+          ? 'bg-white/95 backdrop-blur-lg shadow-lg'
+          : 'bg-white/90'
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3 md:py-4">
@@ -315,7 +315,7 @@ export default function ChontaTokenLanding() {
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
                       <span className="text-xs md:text-sm font-medium text-green-700">{formatAddress(address)}</span>
                     </div>
-                    <Button 
+                    <Button
                       onClick={() => router.push('/dashboard/overview')}
                       className="cursor-pointer bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg text-xs md:text-sm px-3 md:px-4 py-2"
                       size="sm"
@@ -328,7 +328,7 @@ export default function ChontaTokenLanding() {
                 ) : (
                   <>
                     {/* Botón completo en desktop y tablet */}
-                    <Button 
+                    <Button
                       onClick={handleConnectWallet}
                       className="hidden sm:flex bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 shadow-lg cursor-pointer text-sm px-4 py-2"
                       size="sm"
@@ -349,8 +349,8 @@ export default function ChontaTokenLanding() {
               </ClientOnly>
 
               {/* Mobile menu button */}
-              <button 
-                onClick={() => setIsMenuOpen(!isMenuOpen)} 
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className={`lg:hidden p-2 rounded-lg transition-colors cursor-pointer ${
                   scrolled ? 'hover:bg-gray-100' : 'hover:bg-white/10'
                 }`}
@@ -391,7 +391,7 @@ export default function ChontaTokenLanding() {
         <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-emerald-50/50 to-white"></div>
         <div className="absolute top-10 md:top-20 right-0 w-48 h-48 md:w-96 md:h-96 bg-green-200 rounded-full blur-3xl opacity-20"></div>
         <div className="absolute bottom-0 left-0 w-48 h-48 md:w-96 md:h-96 bg-emerald-200 rounded-full blur-3xl opacity-20"></div>
-        
+
         <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Texto y botones */}
@@ -407,9 +407,9 @@ export default function ChontaTokenLanding() {
                     100% Seguro
                   </Badge>
                 </div>
-                
+
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Transforma a Cali en una ciudad <span className="text-green-600">más verde y sostenible</span>
+                  Transforma a tu ciudad en una ciudad <span className="text-green-600">más verde y sostenible</span>
                 </h1>
               </div>
 
@@ -456,7 +456,7 @@ export default function ChontaTokenLanding() {
             <div className="relative mt-8 lg:mt-0">
               <div className="relative mx-auto max-w-sm md:max-w-md lg:max-w-lg">
                 <Image
-                  src="/Colombia.jpg"
+                  src="/Colombia.png"
                   alt="Ilustración Cali"
                   width={500}
                   height={300}
@@ -474,7 +474,7 @@ export default function ChontaTokenLanding() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="absolute -bottom-2 -left-2 md:-bottom-4 md:-left-4 bg-white rounded-lg shadow-lg p-2 md:p-3 animate-float-delayed max-w-[120px] md:max-w-none">
                   <div className="flex items-center gap-1 md:gap-2">
                     <div className="w-6 h-6 md:w-8 md:h-8 bg-blue-100 rounded-full flex items-center justify-center">
@@ -501,7 +501,7 @@ export default function ChontaTokenLanding() {
                 ¿Qué es Chontacoin?
               </h2>
               <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-                La primera plataforma blockchain que promueve el activismo ambiental en Colombia 
+                La primera plataforma blockchain que promueve el activismo ambiental en Colombia
               </p>
             </div>
 
@@ -650,7 +650,7 @@ export default function ChontaTokenLanding() {
                       <ChevronRight className="w-6 h-6 text-gray-300 -ml-3" />
                     </div>
                   )}
-                  
+
                   <div className="text-center space-y-4 group h-full">
                     <div className={`
                       w-20 h-20 md:w-24 md:h-24 mx-auto rounded-2xl flex items-center justify-center
@@ -702,7 +702,7 @@ export default function ChontaTokenLanding() {
                 } ${
                   activity.color === 'orange' ? 'from-orange-400 to-red-500' : ''
                 }`}></div>
-                
+
                 <CardHeader className="flex-grow">
                   <div className="flex justify-between items-start mb-4">
                     <div className={`w-12 h-12 md:w-14 md:h-14 rounded-lg flex items-center justify-center ${activity.iconBg}`}>
@@ -715,7 +715,7 @@ export default function ChontaTokenLanding() {
                   <CardTitle className="text-lg md:text-xl mb-2">{activity.title}</CardTitle>
                   <CardDescription className="text-sm md:text-base leading-relaxed">{activity.description}</CardDescription>
                 </CardHeader>
-                
+
                 <CardContent className="pt-0 space-y-4">
                   <div className="flex flex-wrap gap-2">
                     <Badge variant="outline" className="text-xs">
@@ -729,7 +729,7 @@ export default function ChontaTokenLanding() {
                       {activity.next}
                     </Badge>
                   </div>
-                  
+
                   {/* Botón Ver Detalles */}
                   <Button
                     onClick={() => handleActivityClick(activity)}
@@ -791,8 +791,8 @@ export default function ChontaTokenLanding() {
                   )}
                   <CardHeader className="text-center pt-8 flex-grow">
                     <div className={`w-16 h-16 md:w-20 md:h-20 mx-auto rounded-full flex items-center justify-center shadow-lg ${
-                      reward.available 
-                        ? 'bg-gradient-to-br from-green-400 to-emerald-500' 
+                      reward.available
+                        ? 'bg-gradient-to-br from-green-400 to-emerald-500'
                         : 'bg-gray-300'
                     }`}>
                       <reward.icon className="w-8 h-8 md:w-10 md:h-10 text-white" />
@@ -803,7 +803,7 @@ export default function ChontaTokenLanding() {
                   <CardContent className="text-center">
                     <div className="space-y-3">
                       <p className="text-xl md:text-2xl font-bold text-green-600">{reward.cost}</p>
-                      <Button 
+                      <Button
                         className={`w-full ${
                           reward.available
                             ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
@@ -826,7 +826,7 @@ export default function ChontaTokenLanding() {
       <section id="Mapa" className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Mapa de Impacto en Cali</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Mapa de Impacto</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               Visualiza las áreas en las que queremos generar un impacto positivo en nuestra ciudad
             </p>
@@ -837,8 +837,8 @@ export default function ChontaTokenLanding() {
               <div className="space-y-6 md:space-y-8">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
                   {[
-                    { icon: "/microalga1.png", label: "Cultivos de microalgas", bg: "bg-green-50" },
-                    { icon: "/limpieza comunitaria1.png", label: "Limpieza comunitaria", bg: "bg-blue-50" },
+                    { icon: "/M.png", label: "Cultivos de microalgas", bg: "bg-green-50" },
+                    { icon: "/L.png", label: "Limpieza comunitaria", bg: "bg-blue-50" },
                     { icon: "/Ciudadana.png", label: "Participación ciudadana", bg: "bg-orange-50" }
                   ].map((item, index) => (
                     <div key={index} className={`text-center p-4 md:p-6 ${item.bg} rounded-2xl flex flex-col items-center justify-center`}>
@@ -963,7 +963,7 @@ export default function ChontaTokenLanding() {
             <p className="text-lg md:text-xl text-green-50 mb-6 md:mb-8">
               Únete a la revolución ambiental de Cali. Comienza a ganar tokens hoy mismo.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 md:mb-12">
               <Button
                 size="lg"
@@ -974,7 +974,7 @@ export default function ChontaTokenLanding() {
                 {isConnected ? 'Ir al Dashboard' : 'Conectar Wallet Ahora'}
               </Button>
             </div>
-            
+
             {/* Stats - Mejorado para responsive */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
               {stats.map((stat, index) => {
@@ -1002,7 +1002,7 @@ export default function ChontaTokenLanding() {
             <div className="sm:col-span-2 md:col-span-1 space-y-4">
               <div className="flex items-center space-x-3">
                 <Image
-                  src="/recurso 2logo.png"
+                  src="/Logo.png"
                   alt="Logo ChontaToken"
                   width={140}
                   height={44}
@@ -1111,9 +1111,9 @@ export default function ChontaTokenLanding() {
 
       {/* Modal de conexión de wallet */}
       <ClientOnly>
-        <ConnectWalletModal 
-          isOpen={showModal} 
-          onClose={() => setShowModal(false)} 
+        <ConnectWalletModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
         />
       </ClientOnly>
 
@@ -1126,7 +1126,7 @@ export default function ChontaTokenLanding() {
               <div className={`h-2 bg-gradient-to-r ${
                 selectedActivity.color === 'green' ? 'from-green-400 to-emerald-500' : 'from-orange-400 to-red-500'
               }`}></div>
-              
+
               <div className="p-6 pb-0">
                 <div className="flex justify-between items-start">
                   <div className="flex items-center space-x-4">
@@ -1181,7 +1181,7 @@ export default function ChontaTokenLanding() {
                       Volver
                     </Button>
                   </div>
-                  
+
                   {/* Contenedor de Infografía */}
                   <div className="relative bg-white rounded-xl border-2 border-gray-100 overflow-hidden">
                     <div className="aspect-[3/4] relative bg-gradient-to-br from-green-50 to-blue-50">
@@ -1191,14 +1191,14 @@ export default function ChontaTokenLanding() {
                           <div className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center ${selectedActivity.iconBg}`}>
                             <selectedActivity.icon className={`w-12 h-12 ${selectedActivity.iconColor}`} />
                           </div>
-                          
+
                           <div>
                             <h4 className="text-2xl font-bold text-gray-800 mb-2">
                               {selectedActivity.title}
                             </h4>
                             <p className="text-gray-600 mb-4">Guía Visual Completa</p>
                           </div>
-                          
+
                           {/* Elementos informativos de la infografía */}
                           <div className="grid grid-cols-2 gap-4 text-sm">
                             <div className="bg-white/80 rounded-lg p-3 text-center">
@@ -1222,7 +1222,7 @@ export default function ChontaTokenLanding() {
                               <p className="text-gray-600 text-xs">Recompensa</p>
                             </div>
                           </div>
-                          
+
                           {/* Pasos o información clave */}
                           <div className="bg-white/90 rounded-lg p-4 text-left">
                             <h5 className="font-semibold text-gray-800 mb-2">Pasos Principales:</h5>
@@ -1242,7 +1242,7 @@ export default function ChontaTokenLanding() {
                             </ul>
                           </div>
                         </div>
-                        
+
                         {/* Decoraciones */}
                         <div className="absolute top-4 right-4 opacity-20">
                           <Sparkles className="w-8 h-8 text-green-600" />
@@ -1258,7 +1258,7 @@ export default function ChontaTokenLanding() {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Footer de la infografía */}
                     <div className="bg-gray-50 px-6 py-3 border-t">
                       <p className="text-xs text-gray-600 text-center">
@@ -1266,7 +1266,7 @@ export default function ChontaTokenLanding() {
                       </p>
                     </div>
                   </div>
-                  
+
                   {/* Botón de descarga (opcional) */}
                   <div className="text-center">
                     <Button
@@ -1302,7 +1302,7 @@ export default function ChontaTokenLanding() {
                           <p className="text-gray-600">Actividad: {selectedActivity.title}</p>
                         </div>
                       </div>
-                      
+
                       {/* Decoración */}
                       <div className="absolute top-4 right-4 opacity-20">
                         <Sparkles className="w-8 h-8 text-green-600" />
@@ -1311,7 +1311,7 @@ export default function ChontaTokenLanding() {
                         <Heart className="w-6 h-6 text-orange-600" />
                       </div>
                     </div>
-                    
+
                     {/* Botón Ver Infografía sobrepuesto */}
                     <div className="absolute bottom-4 right-4">
                       <Button
@@ -1401,8 +1401,8 @@ export default function ChontaTokenLanding() {
                   <Button
                     onClick={handleConnectWallet}
                     className={`flex-1 ${
-                      selectedActivity.color === 'green' 
-                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700' 
+                      selectedActivity.color === 'green'
+                        ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
                         : 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700'
                     } text-white shadow-lg cursor-pointer`}
                     size="lg"
@@ -1449,7 +1449,7 @@ export default function ChontaTokenLanding() {
           0% { transform: rotate(0deg); }
           100% { transform: rotate(360deg); }
         }
-        
+
         .animate-float {
           animation: float 3s ease-in-out infinite;
         }
@@ -1460,7 +1460,7 @@ export default function ChontaTokenLanding() {
         .animate-spin-slow {
           animation: spin-slow 3s linear infinite;
         }
-        
+
         /* Responsive adjustments */
         @media (max-width: 640px) {
           .animate-spin-slow {
