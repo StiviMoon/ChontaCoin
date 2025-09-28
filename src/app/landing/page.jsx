@@ -164,31 +164,31 @@ export default function ChontaTokenLanding() {
     setIsMenuOpen(false)
   }
 
-  // Estadísticas animadas con iconos mejorados
+  // Estadísticas enfocadas en microalgas y educación - Universal
   const stats = [
     {
       value: "",
       label: "Cultivo de microalgas",
       icon: Microscope,
-      description: "Contribución al río Cauca"
+      description: "Purificación de ríos urbanos"
     },
     {
       value: "",
-      label: "Reducción de CO₂",
-      icon: Globe,
-      description: "Impacto ambiental medible"
+      label: "Educación ambiental",
+      icon: GraduationCap,
+      description: "Capacitación especializada"
     },
     {
       value: "",
-      label: "Participación ciudadana",
-      icon: Users,
-      description: "Comunidad activa"
+      label: "Empresas aliadas",
+      icon: Building2,
+      description: "Recompensas reales"
     },
     {
       value: "",
-      label: "Recuperación de espacios",
-      icon: TreePine,
-      description: "Transformación urbana"
+      label: "Impacto medible",
+      icon: BarChart3,
+      description: "Resultados verificables"
     }
   ]
 
@@ -202,61 +202,64 @@ export default function ChontaTokenLanding() {
     { id: 'FAQ', label: 'FAQ' }
   ]
 
-  // Datos completos de actividades con iconos Lucide
+  // Datos de actividades enfocados en microalgas y educación - Universal
   const activitiesData = [
     {
       id: 1,
-      title: "Cultivo de microalgas",
-      description: "Participa en jornadas de cultivo de microalgas para contribuir en el mantenimiento del río cauca.",
-      detailedDescription: "Las microalgas son organismos microscópicos que juegan un papel crucial en la purificación del agua y la reducción de CO₂. En estas jornadas aprenderás sobre técnicas de cultivo sostenible, el impacto ambiental positivo de las microalgas, y contribuirás directamente a la mejora de la calidad del agua del río Cauca. Cada sesión incluye capacitación técnica, trabajo práctico en laboratorio y actividades de campo.",
-      reward: "75-150 CHT",
+      title: "Cultivo de Microalgas",
+      description: "Participa en el cultivo de microalgas para purificar ríos urbanos y reducir CO₂.",
+      detailedDescription: "Las microalgas son organismos microscópicos que juegan un papel crucial en la purificación del agua y la reducción de CO₂. En estas jornadas especializadas aprenderás técnicas de cultivo sostenible, el impacto ambiental positivo de las microalgas, y contribuirás directamente a la mejora de la calidad del agua de ríos urbanos. Cada sesión incluye capacitación técnica especializada, trabajo práctico en laboratorio y actividades de campo con monitoreo científico.",
+      reward: "100-200 CHT",
       color: "green",
-      difficulty: "Media",
-      time: "4 horas",
+      difficulty: "Intermedia",
+      time: "6 horas",
       next: "Sábados",
-      location: "Laboratorio de Biotecnología - Universidad del Valle",
-      requirements: "No se requiere experiencia previa. Se proporcionará todo el material necesario.",
-      schedule: "8:00 AM - 12:00 PM",
-      maxParticipants: "15 personas por sesión",
-      icon: Microscope, // Icono Lucide para microalgas/laboratorio
+      location: "Laboratorio de Biotecnología - Universidad Local",
+      requirements: "Interés en biotecnología ambiental. Se proporciona todo el material y capacitación necesaria.",
+      schedule: "8:00 AM - 2:00 PM",
+      maxParticipants: "12 personas por sesión",
+      icon: Microscope,
       iconColor: "text-green-600",
-      iconBg: "bg-green-100"
+      iconBg: "bg-green-100",
+      customIcon: "/Microalga.jpeg"
     },
     {
       id: 2,
-      title: "Limpieza Comunitaria",
-      description: "Únete a la limpieza de zonas alrededor del río Cauca y parques",
-      detailedDescription: "Actividad comunitaria que busca recuperar y mantener limpios los espacios públicos de nuestra ciudad. Trabajamos en equipo para recolectar residuos, clasificar materiales reciclables y crear conciencia ambiental. Cada jornada incluye herramientas de trabajo, refrigerio y certificado de participación. Es una excelente oportunidad para conocer personas comprometidas con el medio ambiente y hacer networking verde.",
-      reward: "25-75 CHT",
-      color: "orange",
-      difficulty: "Fácil",
+      title: "Educación Ambiental Avanzada",
+      description: "Talleres especializados en biotecnología, sostenibilidad y economía circular.",
+      detailedDescription: "Programa educativo integral que abarca temas especializados como biotecnología ambiental, cultivo de microalgas, economía circular, tecnologías verdes y desarrollo sostenible. Cada sesión incluye conferencias magistrales con expertos, talleres prácticos de laboratorio, estudios de caso reales y debates grupales. Los participantes recibirán material didáctico especializado, acceso a biblioteca virtual de biotecnología y certificado de asistencia avalado por instituciones académicas locales.",
+      reward: "60-120 CHT",
+      color: "blue",
+      difficulty: "Intermedia",
       time: "3 horas",
-      next: "Domingos",
-      location: "Malecón del río Cauca - Parque de la Caña",
-      requirements: "Ropa cómoda, zapatos cerrados, protector solar. Se proporciona guantes y bolsas.",
-      schedule: "7:00 AM - 10:00 AM",
-      maxParticipants: "50 personas por jornada",
-      icon: Trash2, // Icono Lucide para limpieza
-      iconColor: "text-orange-600",
-      iconBg: "bg-orange-100"
+      next: "Martes y Jueves",
+      location: "Auditorio Central - Cámara de Comercio Local",
+      requirements: "Cuaderno para notas, interés por la biotecnología. Material digital especializado incluido.",
+      schedule: "6:00 PM - 9:00 PM",
+      maxParticipants: "80 personas por sesión",
+      icon: GraduationCap,
+      iconColor: "text-blue-600",
+      iconBg: "bg-blue-100",
+      customIcon: "/Educacion.png"
     },
     {
       id: 3,
-      title: "Educación Ambiental",
-      description: "Asiste a talleres y charlas sobre sostenibilidad y medio ambiente.",
-      detailedDescription: "Programa educativo integral que abarca temas como cambio climático, economía circular, tecnologías verdes y desarrollo sostenible. Cada sesión incluye conferencias magistrales, talleres prácticos, estudios de caso y debates grupales. Los participantes recibirán material didáctico digital, acceso a biblioteca virtual y certificado de asistencia. Ideal para estudiantes, profesionales y cualquier persona interesada en ampliar sus conocimientos ambientales.",
-      reward: "40-80 CHT",
-      color: "green",
-      difficulty: "Media",
-      time: "2 horas",
-      next: "Martes y Jueves",
-      location: "Auditorio Central - Cámara de Comercio de Cali",
-      requirements: "Cuaderno para notas, interés por aprender. Material digital incluido.",
-      schedule: "6:00 PM - 8:00 PM",
-      maxParticipants: "100 personas por sesión",
-      icon: GraduationCap, // Icono Lucide para educación
-      iconColor: "text-blue-600",
-      iconBg: "bg-blue-100"
+      title: "Monitoreo Científico",
+      description: "Participa en la recolección de datos científicos para medir el impacto ambiental.",
+      detailedDescription: "Actividad científica que busca recopilar datos reales sobre el impacto de nuestras iniciativas ambientales. Trabajamos con equipos de medición especializados para monitorear la calidad del agua, niveles de CO₂, biodiversidad y otros indicadores ambientales. Cada jornada incluye capacitación en técnicas de muestreo, herramientas de laboratorio y certificado de participación científica. Es una excelente oportunidad para contribuir a la investigación ambiental de tu ciudad.",
+      reward: "80-150 CHT",
+      color: "purple",
+      difficulty: "Avanzada",
+      time: "4 horas",
+      next: "Domingos",
+      location: "Estaciones de monitoreo - Ríos Urbanos",
+      requirements: "Ropa cómoda, zapatos cerrados. Se proporciona todo el equipo científico necesario.",
+      schedule: "7:00 AM - 11:00 AM",
+      maxParticipants: "20 personas por jornada",
+      icon: Activity,
+      iconColor: "text-purple-600",
+      iconBg: "bg-purple-100",
+      customIcon: "/Transparencia.png"
     }
   ]
 
@@ -385,7 +388,7 @@ export default function ChontaTokenLanding() {
         </div>
       </header>
 
-      {/* Hero Section Mejorado */}
+      {/* Hero Section - Enfocado en microalgas - Universal */}
       <section id="Inicio" className="relative pt-16 pb-12 md:pt-20 md:pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-emerald-50/50 to-white"></div>
@@ -399,18 +402,21 @@ export default function ChontaTokenLanding() {
               <div className="space-y-4 md:space-y-6">
                 <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
                   <Badge className="bg-green-100 text-green-800 border-green-200 text-xs">
-                    <Sparkles className="mr-1 w-3 h-3" />
-                    Revolución Ambiental Blockchain
+                    <Microscope className="mr-1 w-3 h-3" />
+                    Biotecnología Ambiental
                   </Badge>
                   <Badge variant="outline" className="border-green-600 text-green-600 text-xs">
-                    <Shield className="mr-1 w-3 h-3" />
-                    100% Seguro
+                    <GraduationCap className="mr-1 w-3 h-3" />
+                    Educación Especializada
                   </Badge>
                 </div>
 
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                  Transforma a tu ciudad en una ciudad <span className="text-green-600">más verde y sostenible</span>
+                  Purifica ríos urbanos con <span className="text-green-600">microalgas y educación</span>
                 </h1>
+                <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0">
+                  Únete a la revolución biotecnológica que está transformando ciudades a través del cultivo de microalgas, educación especializada y recompensas reales con empresas aliadas.
+                </p>
               </div>
 
               <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center lg:justify-start">
@@ -433,7 +439,7 @@ export default function ChontaTokenLanding() {
                 </Button>
               </div>
 
-              {/* Trust Indicators - Mejorados para responsive */}
+              {/* Trust Indicators - Enfocados en microalgas */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 pt-6 md:pt-8 border-t">
                 {stats.map((stat, index) => {
                   const IconComponent = stat.icon
@@ -452,25 +458,25 @@ export default function ChontaTokenLanding() {
               </div>
             </div>
 
-            {/* Hero Image/Animation - Mejorado */}
+            {/* Hero Image - Manteniendo Colombia.png */}
             <div className="relative mt-8 lg:mt-0">
               <div className="relative mx-auto max-w-sm md:max-w-md lg:max-w-lg">
                 <Image
                   src="/Colombia.png"
-                  alt="Ilustración Cali"
+                  alt="Ilustración de ciudad sostenible"
                   width={500}
                   height={300}
                   className="w-full h-auto object-contain rounded-2xl shadow-2xl"
                 />
 
-                {/* Floating Cards - Ajustados para responsive */}
+                {/* Floating Cards - Enfocados en microalgas */}
                 <div className="absolute -top-2 -right-2 md:-top-4 md:-right-4 bg-white rounded-lg shadow-lg p-2 md:p-3 animate-float max-w-[120px] md:max-w-none">
                   <div className="flex items-center gap-1 md:gap-2">
                     <div className="w-6 h-6 md:w-8 md:h-8 bg-green-100 rounded-full flex items-center justify-center">
-                      <TrendingUp className="w-3 h-3 md:w-4 md:h-4 text-green-600" />
+                      <Microscope className="w-3 h-3 md:w-4 md:h-4 text-green-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Líderes ambientales</p>
+                      <p className="text-xs text-gray-500">Microalgas activas</p>
                     </div>
                   </div>
                 </div>
@@ -478,10 +484,10 @@ export default function ChontaTokenLanding() {
                 <div className="absolute -bottom-2 -left-2 md:-bottom-4 md:-left-4 bg-white rounded-lg shadow-lg p-2 md:p-3 animate-float-delayed max-w-[120px] md:max-w-none">
                   <div className="flex items-center gap-1 md:gap-2">
                     <div className="w-6 h-6 md:w-8 md:h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <Users className="w-3 h-3 md:w-4 md:h-4 text-blue-600" />
+                      <GraduationCap className="w-3 h-3 md:w-4 md:h-4 text-blue-600" />
                     </div>
                     <div>
-                      <p className="text-xs text-gray-500">Participantes</p>
+                      <p className="text-xs text-gray-500">Educación especializada</p>
                     </div>
                   </div>
                 </div>
@@ -491,7 +497,7 @@ export default function ChontaTokenLanding() {
         </div>
       </section>
 
-      {/* ¿Qué es? - Mejorado */}
+      {/* ¿Qué es? - Enfocado en microalgas - Universal */}
       <section id="que-es" className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto">
@@ -501,28 +507,22 @@ export default function ChontaTokenLanding() {
                 ¿Qué es Chontacoin?
               </h2>
               <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-                La primera plataforma blockchain que promueve el activismo ambiental en Colombia
+                La primera plataforma blockchain que combina biotecnología de microalgas, educación especializada y recompensas reales para ciudades sostenibles
               </p>
             </div>
 
-            {/* Cards Grid - Mejorado para responsive */}
+            {/* Cards Grid - Enfocados en microalgas */}
             <div className="grid md:grid-cols-3 gap-6 mb-12 md:mb-16">
               <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 <CardHeader className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    {/* Icono Blockchain/Cadena */}
-                    <div className="relative">
-                      <LinkIcon className="w-10 h-10 text-green-600 animate-pulse" />
-                      <div className="absolute -top-1 -right-1">
-                        <Leaf className="w-4 h-4 text-emerald-500" />
-                      </div>
-                    </div>
+                    <Microscope className="w-10 h-10 text-green-600 animate-pulse" />
                   </div>
-                  <CardTitle className="text-lg md:text-xl">Blockchain Verde</CardTitle>
+                  <CardTitle className="text-lg md:text-xl">Biotecnología de Microalgas</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 text-center text-sm md:text-base">
-                    Tecnología descentralizada que garantiza transparencia total en cada recompensa ambiental otorgada.
+                    Cultivamos microalgas especializadas que purifican el agua de ríos urbanos y reducen CO₂ de manera científicamente verificable.
                   </p>
                 </CardContent>
               </Card>
@@ -530,57 +530,45 @@ export default function ChontaTokenLanding() {
               <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 <CardHeader className="text-center">
                   <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-indigo-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    {/* Icono Economía Circular con animación */}
-                    <div className="relative">
-                      <RefreshCw className="w-10 h-10 text-blue-600 animate-spin-slow" />
-                      <Coins className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-indigo-600" />
-                    </div>
+                    <GraduationCap className="w-10 h-10 text-blue-600" />
                   </div>
-                  <CardTitle className="text-lg md:text-xl">Economía Circular</CardTitle>
+                  <CardTitle className="text-lg md:text-xl">Educación Especializada</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 text-center text-sm md:text-base">
-                    Tokens que puedes canjear por beneficios reales en comercios locales comprometidos.
+                    Talleres y capacitaciones especializadas en biotecnología ambiental con expertos de instituciones académicas locales.
                   </p>
                 </CardContent>
               </Card>
 
               <Card className="border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-pink-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
-                    {/* Icono Impacto Colectivo */}
-                    <div className="relative">
-                      <div className="relative flex h-10 w-10">
-                        <div className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></div>
-                        <div className="relative inline-flex rounded-full h-10 w-10 bg-green-600 items-center justify-center">
-                          <Users className="w-5 h-5 text-white" />
-                        </div>
-                      </div>
-                    </div>
+                  <div className="w-16 h-16 bg-gradient-to-br from-orange-100 to-red-100 rounded-xl flex items-center justify-center mb-4 mx-auto">
+                    <Building2 className="w-10 h-10 text-orange-600" />
                   </div>
-                  <CardTitle className="text-lg md:text-xl">Impacto Colectivo</CardTitle>
+                  <CardTitle className="text-lg md:text-xl">Empresas Aliadas</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 text-center text-sm md:text-base">
-                    Una comunidad activa que trabaja unida para transformar Cali en una ciudad modelo.
+                    Red de comercios y empresas comprometidas que ofrecen descuentos y beneficios reales por tus tokens CHT.
                   </p>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Feature Highlights - Mejorado */}
+            {/* Feature Highlights - Enfocado en el sistema */}
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl p-6 md:p-8">
               <div className="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
                 <div>
                   <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
-                    Más que una criptomoneda
+                    Sistema Integrado de Impacto Ambiental
                   </h3>
                   <ul className="space-y-3">
                     {[
-                      "Verificación comunitaria de todas las actividades",
-                      "Smart contracts auditados y seguros",
-                      "Impacto medible y transparente",
-                      "Recompensas inmediatas y tangibles"
+                      "Cultivo científico de microalgas para purificación de ríos urbanos",
+                      "Educación especializada en biotecnología ambiental",
+                      "Verificación científica de resultados medibles",
+                      "Recompensas reales con empresas aliadas locales"
                     ].map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
                         <CheckCircle className="w-4 h-4 md:w-5 md:h-5 text-green-600 mt-0.5 flex-shrink-0" />
@@ -591,10 +579,10 @@ export default function ChontaTokenLanding() {
                 </div>
                 <div className="text-center">
                   <div className="inline-flex items-center justify-center w-24 h-24 md:w-32 md:h-32 bg-white rounded-full shadow-lg">
-                    <Shield className="w-12 h-12 md:w-16 md:h-16 text-green-600" />
+                    <BarChart3 className="w-12 h-12 md:w-16 md:h-16 text-green-600" />
                   </div>
                   <p className="mt-4 text-base md:text-lg font-semibold text-gray-900">
-                    100% Transparente
+                    Impacto Científicamente Medible
                   </p>
                 </div>
               </div>
@@ -603,15 +591,15 @@ export default function ChontaTokenLanding() {
         </div>
       </section>
 
-      {/* ¿Cómo funciona? - Mejorado */}
+      {/* ¿Cómo funciona? - Explicación del sistema */}
       <section id="como-funciona" className="py-12 md:py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-12 md:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
-              ¿Cómo funciona Chontacoin?
+              ¿Cómo funciona nuestro sistema?
             </h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-              4 pasos simples para comenzar a ganar mientras cuidas a Cali
+              4 pasos para participar en la revolución biotecnológica de tu ciudad
             </p>
           </div>
 
@@ -621,26 +609,26 @@ export default function ChontaTokenLanding() {
                 {
                   step: 1,
                   title: "Conecta tu Wallet",
-                  description: "Usa MetaMask o cualquier wallet compatible. Es gratis y toma menos de 2 minutos.",
+                  description: "Usa MetaMask para acceder a la plataforma blockchain. Configuración gratuita en 2 minutos.",
                   color: "green"
                 },
                 {
                   step: 2,
-                  title: "Únete a Actividades",
-                  description: "Elige entre las actividades ambientales que tenemos disponibles.",
-                  color: "orange"
+                  title: "Elige tu Actividad",
+                  description: "Selecciona entre cultivo de microalgas, educación especializada o monitoreo científico.",
+                  color: "blue"
                 },
                 {
                   step: 3,
-                  title: "Participa y Verifica",
-                  description: "Completa actividades y súbelas con foto, ubicación para verificación.",
-                  color: "orange"
+                  title: "Participa y Aprende",
+                  description: "Asiste a las sesiones especializadas, aprende biotecnología y contribuye al impacto ambiental.",
+                  color: "purple"
                 },
                 {
                   step: 4,
-                  title: "Gana Tokens",
-                  description: "Recibe CHT tokens instantáneamente y canjéalos por recompensas reales.",
-                  color: "green"
+                  title: "Gana y Canjea",
+                  description: "Recibe tokens CHT por tu participación y canjéalos por beneficios reales en empresas aliadas.",
+                  color: "orange"
                 }
               ].map((item, index) => (
                 <div key={index} className="relative">
@@ -656,6 +644,8 @@ export default function ChontaTokenLanding() {
                       w-20 h-20 md:w-24 md:h-24 mx-auto rounded-2xl flex items-center justify-center
                       bg-gradient-to-br shadow-lg transform transition-all group-hover:scale-110
                       ${item.color === 'green' ? 'from-green-400 to-emerald-500' : ''}
+                      ${item.color === 'blue' ? 'from-blue-400 to-indigo-500' : ''}
+                      ${item.color === 'purple' ? 'from-purple-400 to-violet-500' : ''}
                       ${item.color === 'orange' ? 'from-orange-400 to-red-500' : ''}
                     `}>
                       <span className="text-2xl md:text-3xl font-bold text-white">{item.step}</span>
@@ -682,15 +672,15 @@ export default function ChontaTokenLanding() {
         </div>
       </section>
 
-      {/* Actividades - Mejorado */}
+      {/* Actividades - Enfocadas en microalgas y educación */}
       <section id="Actividades" className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-12 md:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
-              Gana Tokens con cada acción
+              Actividades Especializadas
             </h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-              Múltiples formas de contribuir y ganar recompensas todos los días
+              Participa en actividades científicas y educativas que generan impacto real en tu ciudad
             </p>
           </div>
 
@@ -700,7 +690,9 @@ export default function ChontaTokenLanding() {
                 <div className={`h-2 bg-gradient-to-r ${
                   activity.color === 'green' ? 'from-green-400 to-emerald-500' : ''
                 } ${
-                  activity.color === 'orange' ? 'from-orange-400 to-red-500' : ''
+                  activity.color === 'blue' ? 'from-blue-400 to-indigo-500' : ''
+                } ${
+                  activity.color === 'purple' ? 'from-purple-400 to-violet-500' : ''
                 }`}></div>
 
                 <CardHeader className="flex-grow">
@@ -747,37 +739,78 @@ export default function ChontaTokenLanding() {
         </div>
       </section>
 
-      {/* Recompensas - Mejorado */}
+      {/* Recompensas - Enfocadas en empresas aliadas */}
       <section id="Recompensas" className="py-12 md:py-20 bg-gradient-to-br from-green-50 to-emerald-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-12 md:mb-16">
             <Badge className="bg-green-100 text-green-800 border-green-200">
-              <Gift className="mr-1 w-3 h-3" />
-              Marketplace de Recompensas
+              <Building2 className="mr-1 w-3 h-3" />
+              Red de Empresas Aliadas
             </Badge>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
-              Convierte tus Tokens en beneficios reales
+              Canjea tus tokens con empresas comprometidas
             </h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+              Red de comercios y empresas locales que apoyan la iniciativa ambiental de Chontacoin
+            </p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="grid md:grid-cols-2 gap-6 md:gap-8">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
               {[
                 {
-                  title: "Descuentos Comerciales",
-                  description: "10-30% de descuento en tiendas y restaurantes aliados",
-                  cost: "100 CHT",
+                  title: "Restaurantes Ecológicos",
+                  description: "15-25% de descuento en restaurantes que usan ingredientes locales y sostenibles",
+                  cost: "150 CHT",
                   icon: Award,
                   available: true,
-                  popular: true
+                  popular: true,
+                  examples: "Restaurantes Verdes, EcoLocal, Sabor Sostenible"
                 },
                 {
-                  title: "Transporte Gratuito",
-                  description: "Viajes gratis en MIO",
-                  cost: "50 CHT",
+                  title: "Transporte Sostenible",
+                  description: "Viajes gratuitos en transporte público y descuentos en servicios de transporte ecológico",
+                  cost: "80 CHT",
                   icon: MapPin,
                   available: true,
-                  popular: false
+                  popular: false,
+                  examples: "Transporte Público, Bicicletas Públicas, EcoTaxi"
+                },
+                {
+                  title: "Productos Biotecnológicos",
+                  description: "Descuentos en productos de limpieza ecológicos y biotecnología doméstica",
+                  cost: "200 CHT",
+                  icon: Microscope,
+                  available: true,
+                  popular: true,
+                  examples: "Limpiadores de microalgas, Filtros de agua"
+                },
+                {
+                  title: "Educación Continua",
+                  description: "Descuentos en cursos de biotecnología y sostenibilidad",
+                  cost: "300 CHT",
+                  icon: GraduationCap,
+                  available: true,
+                  popular: false,
+                  examples: "Universidades Locales, Cursos Online"
+                },
+                {
+                  title: "Servicios de Salud",
+                  description: "Descuentos en consultas médicas y servicios de bienestar",
+                  cost: "250 CHT",
+                  icon: Heart,
+                  available: true,
+                  popular: false,
+                  examples: "Clínicas Aliadas, Centros de Bienestar"
+                },
+                {
+                  title: "Productos Locales",
+                  description: "Descuentos en productos de comercios locales comprometidos",
+                  cost: "100 CHT",
+                  icon: Building2,
+                  available: true,
+                  popular: true,
+                  examples: "Mercados Locales, Artesanías"
                 }
               ].map((reward, index) => (
                 <Card key={index} className="relative border-0 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1 h-full flex flex-col">
@@ -799,6 +832,10 @@ export default function ChontaTokenLanding() {
                     </div>
                     <CardTitle className="mt-4 text-lg md:text-xl">{reward.title}</CardTitle>
                     <p className="text-gray-600 text-sm md:text-base mt-2">{reward.description}</p>
+                    <div className="mt-3 p-2 bg-gray-50 rounded-lg">
+                      <p className="text-xs text-gray-500 font-medium">Ejemplos:</p>
+                      <p className="text-xs text-gray-600">{reward.examples}</p>
+                    </div>
                   </CardHeader>
                   <CardContent className="text-center">
                     <div className="space-y-3">
@@ -818,17 +855,49 @@ export default function ChontaTokenLanding() {
                 </Card>
               ))}
             </div>
+
+            {/* Información adicional sobre empresas aliadas */}
+            <div className="mt-12 bg-white rounded-2xl p-6 md:p-8 shadow-lg">
+              <div className="text-center space-y-4">
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900">
+                  ¿Cómo funciona el sistema de empresas aliadas?
+                </h3>
+                <div className="grid md:grid-cols-3 gap-6 mt-6">
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Building2 className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Empresas Verificadas</h4>
+                    <p className="text-sm text-gray-600">Todas las empresas aliadas están verificadas y comprometidas con la sostenibilidad</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <Shield className="w-6 h-6 text-green-600" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Descuentos Reales</h4>
+                    <p className="text-sm text-gray-600">Descuentos verificables que puedes usar inmediatamente</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                      <RefreshCw className="w-6 h-6 text-orange-600" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900 mb-2">Economía Circular</h4>
+                    <p className="text-sm text-gray-600">Tu participación ambiental se convierte en beneficios económicos reales</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-       {/* Mapa de Impacto - Mejorado */}
+      {/* Mapa de Impacto - Universal */}
       <section id="Mapa" className="py-12 md:py-20 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-12 md:mb-16">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Mapa de Impacto</h2>
             <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-              Visualiza las áreas en las que queremos generar un impacto positivo en nuestra ciudad
+              Visualiza las áreas en las que queremos generar un impacto positivo en ciudades sostenibles
             </p>
           </div>
 
@@ -859,8 +928,8 @@ export default function ChontaTokenLanding() {
                   <h3 className="text-xl md:text-2xl font-semibold text-gray-900">Zonas de Mayor Impacto</h3>
                   <div className="space-y-3">
                     {[
-                      { name: "Comuna 2 - Centro", activity: "Alta Actividad", color: "green" },
-                      { name: "Comuna 19 - Meléndez", activity: "Media Actividad", color: "blue" }
+                      { name: "Centro Urbano", activity: "Alta Actividad", color: "green" },
+                      { name: "Riberas de Ríos", activity: "Media Actividad", color: "blue" }
                     ].map((zone, index) => (
                       <div key={index} className="flex items-center justify-between p-3 md:p-4 bg-gray-50 rounded-lg">
                         <div className="flex items-center space-x-3">
@@ -878,7 +947,7 @@ export default function ChontaTokenLanding() {
 
               <div className="relative">
                 <div className="aspect-square bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl flex items-center justify-center overflow-hidden shadow-lg min-h-[300px] md:min-h-[400px]">
-                  {/* Mapa Interactivo */}
+                  {/* Mapa Interactivo - Universal */}
                   <iframe
                     title="Mapa de Impacto Chontacoin"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.870167944447!2d-76.5320066846757!3d3.451646497495384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6e5e5e5e5e5%3A0x1234567890abcdef!2sCali%2C%20Valle%20del%20Cauca!5e0!3m2!1ses!2sco!4v1717777777777!5m2!1ses!2sco"
@@ -897,7 +966,7 @@ export default function ChontaTokenLanding() {
                     Mapa Interactivo de Impacto
                   </h3>
                   <p className="text-sm md:text-base text-white bg-black/50 px-4 py-2 rounded-lg text-center max-w-xs">
-                    Explora en tiempo real las zonas y actividades de Chontacoin.
+                    Explora en tiempo real las zonas y actividades de Chontacoin en tu ciudad.
                   </p>
                 </div>
               </div>
@@ -906,7 +975,7 @@ export default function ChontaTokenLanding() {
         </div>
       </section>
 
-      {/* FAQ - Mejorado */}
+      {/* FAQ - Universal */}
       <section id="FAQ" className="py-12 md:py-20 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center space-y-4 mb-12 md:mb-16">
@@ -938,6 +1007,10 @@ export default function ChontaTokenLanding() {
                   question: "¿Qué pasa si pierdo acceso a mi wallet?",
                   answer: "Es importante guardar tu frase de recuperación en un lugar seguro. Si la pierdes, no podremos recuperar tu acceso. Por eso ofrecemos guías detalladas de seguridad."
                 },
+                {
+                  question: "¿Funciona en cualquier ciudad?",
+                  answer: "Sí, nuestro sistema está diseñado para funcionar en cualquier ciudad con ríos urbanos. Adaptamos las actividades según las características locales de cada región."
+                }
               ].map((item, index) => (
                 <AccordionItem key={index} value={`item-${index}`} className="bg-white rounded-lg px-4 md:px-6 border shadow-sm">
                   <AccordionTrigger className="text-left hover:no-underline text-sm md:text-base py-4">
@@ -953,7 +1026,7 @@ export default function ChontaTokenLanding() {
         </div>
       </section>
 
-      {/* CTA Final - Mejorado */}
+      {/* CTA Final - Universal */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-green-600 to-emerald-600">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
@@ -961,7 +1034,7 @@ export default function ChontaTokenLanding() {
               ¿Listo para Transformar tu Ciudad?
             </h2>
             <p className="text-lg md:text-xl text-green-50 mb-6 md:mb-8">
-              Únete a la revolución ambiental de Cali. Comienza a ganar tokens hoy mismo.
+              Únete a la revolución ambiental de tu ciudad. Comienza a ganar tokens hoy mismo.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8 md:mb-12">
@@ -975,7 +1048,7 @@ export default function ChontaTokenLanding() {
               </Button>
             </div>
 
-            {/* Stats - Mejorado para responsive */}
+            {/* Stats - Enfocados en microalgas */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
               {stats.map((stat, index) => {
                 const IconComponent = stat.icon
@@ -995,7 +1068,7 @@ export default function ChontaTokenLanding() {
         </div>
       </section>
 
-      {/* Footer Mejorado */}
+      {/* Footer - Universal */}
       <footer className="bg-gray-900 text-white py-12 md:py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
@@ -1010,7 +1083,7 @@ export default function ChontaTokenLanding() {
                 />
               </div>
               <p className="text-gray-400 text-sm md:text-base">
-                Transformando Cali a través de la tecnología blockchain y el compromiso ciudadano.
+                Transformando ciudades a través de la tecnología blockchain y el compromiso ciudadano.
               </p>
               <div className="flex gap-3">
                 <button className="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
@@ -1102,7 +1175,7 @@ export default function ChontaTokenLanding() {
                 &copy; {new Date().getFullYear()} Chontacoin. Todos los derechos reservados.
               </p>
               <div className="flex items-center gap-4 md:gap-6 text-xs md:text-sm text-gray-400">
-                <span>Hecho con 💚 en Cali, Colombia</span>
+                <span>Hecho con 💚 para ciudades sostenibles</span>
               </div>
             </div>
           </div>
@@ -1124,14 +1197,18 @@ export default function ChontaTokenLanding() {
             {/* Header del Modal */}
             <div className="relative">
               <div className={`h-2 bg-gradient-to-r ${
-                selectedActivity.color === 'green' ? 'from-green-400 to-emerald-500' : 'from-orange-400 to-red-500'
+                selectedActivity.color === 'green' ? 'from-green-400 to-emerald-500' : 'from-blue-400 to-indigo-500'
+              } ${
+                selectedActivity.color === 'purple' ? 'from-purple-400 to-violet-500' : ''
               }`}></div>
 
               <div className="p-6 pb-0">
                 <div className="flex justify-between items-start">
                   <div className="flex items-center space-x-4">
                     <div className={`w-16 h-16 rounded-xl flex items-center justify-center ${
-                      selectedActivity.color === 'green' ? 'bg-green-100' : 'bg-orange-100'
+                      selectedActivity.color === 'green' ? 'bg-green-100' : 'bg-blue-100'
+                    } ${
+                      selectedActivity.color === 'purple' ? 'bg-purple-100' : ''
                     }`}>
                       <div className="relative w-12 h-12">
                         <Image
@@ -1286,7 +1363,7 @@ export default function ChontaTokenLanding() {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="text-center space-y-4">
                         <div className={`w-24 h-24 mx-auto rounded-full flex items-center justify-center ${
-                          selectedActivity.color === 'green' ? 'bg-green-100' : 'bg-orange-100'
+                          selectedActivity.color === 'green' ? 'bg-green-100' : 'bg-blue-100'
                         }`}>
                           <div className="relative w-16 h-16">
                             <Image
@@ -1403,7 +1480,9 @@ export default function ChontaTokenLanding() {
                     className={`flex-1 ${
                       selectedActivity.color === 'green'
                         ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700'
-                        : 'bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700'
+                        : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700'
+                    } ${
+                      selectedActivity.color === 'purple' ? 'from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700' : ''
                     } text-white shadow-lg cursor-pointer`}
                     size="lg"
                   >
